@@ -1,4 +1,5 @@
 class Question < ActiveRecord::Base
+  belongs_to :assignee, class_name: "User"
   belongs_to :user
 
   has_many :answers, dependent: :destroy
