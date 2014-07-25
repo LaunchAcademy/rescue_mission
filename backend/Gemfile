@@ -4,6 +4,8 @@ gem 'rails', '4.1.4'
 gem 'rails-api'
 gem 'pg'
 
+gem 'rack-cors', require: 'rack/cors'
+
 group :development do
   gem 'spring'
 end
