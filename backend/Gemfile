@@ -5,6 +5,7 @@ gem 'rails-api'
 gem 'pg'
 
 gem 'active_model_serializers'
+gem 'octokit'
 gem 'rack-cors', require: 'rack/cors'
 
 group :development do
@@ -17,6 +18,7 @@ group :test do
 end
 
 group :development, :test do
+  gem 'dotenv-rails'
   gem 'factory_girl_rails'
   gem 'pry-rails'
 end
