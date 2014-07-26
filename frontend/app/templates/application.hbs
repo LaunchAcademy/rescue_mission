@@ -1,3 +1,32 @@
-<h2 id='title'>Welcome to Ember.js</h2>
+<div class="contain-to-grid">
+  <nav class="top-bar" data-topbar>
+    <ul class="title-area">
+      <li class="name">
+        <h1>{{link-to 'Rescue Mission' 'index'}}</h1>
+      </li>
+    </ul>
 
-{{outlet}}
+    <section class="top-bar-section">
+      <ul class="right">
+        {{#if session.isAuthenticated}}
+          <li><a href="#">{{session.currentUser.username}}</a></li>
+          <li><a href="#" {{action 'invalidateSession'}}>Sign out</a></li>
+        {{else}}
+          <li>
+            <a href="#" {{action 'authenticate' 'github-oauth2'}}>
+              Sign in with GitHub
+            </a>
+          </li>
+        {{/if}}
+      </ul>
+    </section>
+  </nav>
+</div>
+
+<div class="row">
+  <div class="small-12 columns">
+    <h2 id='title'>Welcome to Ember.js</h2>
+
+    {{outlet}}
+  </div>
+</div>
