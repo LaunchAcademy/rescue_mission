@@ -2,6 +2,6 @@
 
 <ul class="question-list">
 {{#each question in model}}
-  <li class="question">{{link-to question.title 'index'}}</li>
+  <li class="question">{{link-to question.title 'questions.show' question.id}}</li>
 {{/each}}
 </ul>

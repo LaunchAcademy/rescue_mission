@@ -15,4 +15,14 @@ describe API::V1::QuestionsController do
       )
     end
   end
+
+  describe "GET #show" do
+    it "returns a question" do
+      question = FactoryGirl.create(:question)
+
+      get :show, id: question.id
+
+      expect(json).to be_json_eq QuestionSerializer.new(question)
+    end
+  end
 end
