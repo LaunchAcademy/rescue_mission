@@ -3,7 +3,7 @@ import startApp from '../helpers/start-app';
 
 var App, server;
 
-module('Acceptance: Questions', {
+module('Acceptance: Questions Index', {
   setup: function() {
     App = startApp();
 
