@@ -39,23 +39,22 @@ module.exports = function(environment) {
 
     ENV.host = 'http://localhost:3000';
     ENV.torii.providers['github-oauth2'].apiKey = '5c4f826abba8e1f95028';
+
+    ENV['simple-auth'] = {
+      authorizer: 'simple-auth-authorizer:oauth2-bearer',
+      crossOriginWhitelist: [ENV.host]
+    };
+
+    ENV['simple-auth-oauth2'] = {
+      serverTokenEndpoint: ENV.host + '/api/v1/authentications'
+    };
   }
 
   if (environment === 'test') {
-
   }
 
   if (environment === 'production') {
   }
-
-  ENV['simple-auth'] = {
-    authorizer: 'simple-auth-authorizer:oauth2-bearer',
-    crossOriginWhitelist: [ENV.host]
-  };
-
-  ENV['simple-auth-oauth2'] = {
-    serverTokenEndpoint: ENV.host + '/api/v1/authentications'
-  };
 
   return ENV;
 };

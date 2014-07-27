@@ -1,10 +1,11 @@
 class User < ActiveRecord::Base
   has_many :api_keys, dependent: :destroy
+  has_many :questions, dependent: :destroy
 
-  validates :email, presence: true
+  validates :email, presence: true, uniqueness: true
   validates :provider, presence: true
   validates :uid, presence: true, uniqueness: { scope: :provider }
-  validates :username, presence: true
+  validates :username, presence: true, uniqueness: true
 
   def self.find_or_create_from_oauth!(oauth)
     find_by(uid: oauth.uid, provider: oauth.provider) || create_from_oauth!(oauth)
