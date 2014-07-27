@@ -1,0 +1,7 @@
+<h1 class="page-title">Questions</h1>
+
+<ul class="question-list">
+{{#each question in model}}
+  <li class="question">{{link-to question.title 'index'}}</li>
+{{/each}}
+</ul>
