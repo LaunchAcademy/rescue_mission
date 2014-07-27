@@ -45,7 +45,8 @@
     "currentPath",
     "currentRouteName",
     "Pretender",
-    "jsonResponse"
+    "jsonResponse",
+    "hasContent"
   ],
   "node": false,
   "browser": false,

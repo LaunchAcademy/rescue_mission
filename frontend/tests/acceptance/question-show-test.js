@@ -3,10 +3,6 @@ import startApp from '../helpers/start-app';
 
 var App, server;
 
-function hasContent(content) {
-  return !!find('*:contains(' + content + ')').length;
-}
-
 module('Acceptance: Questions Show', {
   setup: function() {
     App = startApp();
