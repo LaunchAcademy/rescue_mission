@@ -1,7 +1,7 @@
 module Helpers
   module Controllers
-    def mock_access_token_for(user)
-      request.env['HTTP_AUTHORIZATION'] = "Bearer #{user.access_token.access_token}"
+    def mock_authentication_with(api_key)
+      request.env['HTTP_AUTHORIZATION'] = "Bearer #{api_key.access_token}"
     end
 
     def json
