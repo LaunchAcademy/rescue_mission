@@ -1,0 +1,29 @@
+<h1 class="page-title">Ask a Question</h1>
+
+<form>
+  <div class="row">
+    <div class="small-12 columns">
+      <label for="question-title">Title
+        {{input id='question-title' value=title placeholder="Deploying Rails app to Heroku"}}
+      </label>
+      {{#each errors.title}}
+        <small class="error">{{message}}</small>
+      {{/each}}
+    </div>
+  </div>
+  <div class="row">
+    <div class="large-12 columns">
+      <label for="question-body">Body
+        {{textarea id='question-body' value=body cols="80" rows="6"}}
+      </label>
+      {{#each errors.body}}
+        <small class="error">{{message}}</small>
+      {{/each}}
+    </div>
+  </div>
+  <div class="row">
+    <div class="large-12 columns">
+      <button type="submit" {{action 'save' model}}>Ask</button>
+    </div>
+  </div>
+</form>

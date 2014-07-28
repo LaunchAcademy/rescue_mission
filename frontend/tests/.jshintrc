@@ -46,7 +46,9 @@
     "currentRouteName",
     "Pretender",
     "jsonResponse",
-    "hasContent"
+    "hasContent",
+    "authenticateSession",
+    "invalidateSession"
   ],
   "node": false,
   "browser": false,
