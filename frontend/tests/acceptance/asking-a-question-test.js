@@ -6,17 +6,7 @@ var App, server;
 module('Acceptance: Asking a question', {
   setup: function() {
     App = startApp();
-
-    var user = {
-      id: 1,
-      username: 'HeroicEric'
-    };
-
-    server = new Pretender(function(){
-      this.get('/api/v1/users/:id', function(request) {
-        return jsonResponse(200, { user: user });
-      });
-    });
+    server = new Pretender();
   },
   teardown: function() {
     Ember.run(App, 'destroy');
