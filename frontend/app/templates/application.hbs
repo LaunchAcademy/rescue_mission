@@ -14,9 +14,7 @@
           <li><a href="#" {{action 'invalidateSession'}}>Sign out</a></li>
         {{else}}
           <li>
-            <a href="#" {{action 'authenticate' 'github-oauth2'}}>
-              Sign in with GitHub
-            </a>
+            {{link-to 'Log in' 'login'}}
           </li>
         {{/if}}
       </ul>
@@ -26,6 +24,8 @@
 
 <div class="row">
   <div class="small-12 columns">
+    <p>{{x-wuphf}}</p>
+
     {{outlet}}
   </div>
 </div>

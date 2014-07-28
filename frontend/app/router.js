@@ -8,6 +8,8 @@ Router.map(function() {
   this.resource('questions', function() {
     this.route('show', { path: ':id' });
   });
+
+  this.route('login');
 });
 
 export default Router;

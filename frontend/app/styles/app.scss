@@ -1,2 +1,11 @@
 @import 'vendor/foundation/scss/normalize.scss';
 @import 'vendor/foundation/scss/foundation.scss';
+
+.wuphf-message {
+  @extend .alert-box;
+
+  &.danger {
+    @extend .alert;
+  }
+}
+
