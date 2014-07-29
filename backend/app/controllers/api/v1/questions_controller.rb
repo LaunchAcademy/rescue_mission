@@ -1,6 +1,6 @@
 module API::V1
   class QuestionsController < ApplicationController
-    before_action :ensure_valid_api_key!, only: [:create]
+    before_action :ensure_valid_api_key!, only: [:create, :update]
 
     def index
       render json: Question.includes(:user).order(created_at: :desc).limit(25)
@@ -14,7 +14,19 @@ module API::V1
       @question = current_user.questions.build(question_params)
 
       if @question.save
-        render json: @question, status: :created, location: [:api, :v1, @question]
+        render json: @question,
+          status: :created,
+          location: [:api, :v1, @question]
+      else
+        render json: { errors: @question.errors }, status: :unprocessable_entity
+      end
+    end
+
+    def update
+      @question = current_user.questions.find(params[:id])
+
+      if @question.update(question_params)
+        render json: @question, status: :ok, location: [:api, :v1, @question]
       else
         render json: { errors: @question.errors }, status: :unprocessable_entity
       end
