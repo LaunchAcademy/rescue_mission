@@ -1,34 +1,65 @@
-{{#if isEditingTitle}}
-  <form class="edit-question-title-form" {{action 'saveTitle' on='submit'}}>
-    <div class="row">
-      <div class="small-8 columns">
-        {{input value=newTitle}}
-        {{#each errors.title}}
-          <small class="error">{{message}}</small>
-        {{/each}}
+<div class="question">
+  {{#if isEditingTitle}}
+    <form class="question__title__edit-form" {{action 'saveTitle' on='submit'}}>
+      <div class="row">
+        <div class="small-8 columns">
+          {{input value=newTitle}}
+          {{#each errors.title}}
+            <small class="error">{{message}}</small>
+          {{/each}}
+        </div>
+        <div class="small-2 columns">
+          <a href="#" class="button success postfix"
+            {{action 'saveTitle' newTitle}}>Save</a>
+        </div>
+        <div class="small-2 columns">
+          <a href="#" class="button alert postfix"
+            {{action 'cancelEditTitle'}}>Cancel</a>
+        </div>
       </div>
-      <div class="small-2 columns">
-        <a href="#" class="button success postfix"
-          {{action 'saveTitle' newTitle}}>Save</a>
-      </div>
-      <div class="small-2 columns">
-        <a href="#" class="button alert postfix"
-          {{action 'cancelEditTitle'}}>Cancel</a>
-      </div>
-    </div>
-  </form>
-{{else}}
-  <h1 class="page-title">
-    {{title}}
+    </form>
+  {{else}}
+    <h1 class="page-title">
+      {{title}}
 
-    {{#if canEdit}}
-      <small>
-        <a href="#" class="edit-question-title"
-          {{action 'editTitle'}}>Edit</a>
-      </small>
+      {{#if canEdit}}
+        <small>
+          <a href="#" class="question__title__edit"
+            {{action 'editTitle'}}>Edit</a>
+        </small>
+      {{/if}}
+    </h1>
+  {{/if}}
+
+  <p>asked by {{user.username}}</p>
+
+  <div class="question__body">
+    {{#if isEditingBody}}
+      <form class="question__body__edit-form" {{action 'saveBody' on='submit'}}>
+        <div class="row">
+          <div class="small-12 columns">
+            {{textarea value=newBody cols="80" rows="6"}}
+            {{#each errors.body}}
+              <small class="error">{{message}}</small>
+            {{/each}}
+          </div>
+        </div>
+        <div class="row">
+          <div class="small-6 columns">
+            <a href="#" class="button success expand"
+              {{action 'saveBody' newBody}}>Save</a>
+          </div>
+          <div class="small-6 columns">
+            <a href="#" class="button alert expand"
+              {{action 'cancelEditBody'}}>Cancel</a>
+          </div>
+        </div>
+      </form>
+    {{else}}
+      <p>{{body}}</p>
+      {{#if canEdit}}
+        <a href="#" class="question__body__edit" {{action 'editBody'}}>Edit</a>
+      {{/if}}
     {{/if}}
-  </h1>
-{{/if}}
-
-<p>asked by {{user.username}}</p>
-<p>{{body}}</p>
+  </div>
+</div>
