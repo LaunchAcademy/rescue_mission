@@ -1,3 +1,34 @@
-<h1 class="page-title">{{title}}</h1>
+{{#if isEditingTitle}}
+  <form class="edit-question-title-form" {{action 'saveTitle' on='submit'}}>
+    <div class="row">
+      <div class="small-8 columns">
+        {{input value=newTitle}}
+        {{#each errors.title}}
+          <small class="error">{{message}}</small>
+        {{/each}}
+      </div>
+      <div class="small-2 columns">
+        <a href="#" class="button success postfix"
+          {{action 'saveTitle' newTitle}}>Save</a>
+      </div>
+      <div class="small-2 columns">
+        <a href="#" class="button alert postfix"
+          {{action 'cancelEditTitle'}}>Cancel</a>
+      </div>
+    </div>
+  </form>
+{{else}}
+  <h1 class="page-title">
+    {{title}}
+
+    {{#if canEdit}}
+      <small>
+        <a href="#" class="edit-question-title"
+          {{action 'editTitle'}}>Edit</a>
+      </small>
+    {{/if}}
+  </h1>
+{{/if}}
+
 <p>asked by {{user.username}}</p>
 <p>{{body}}</p>

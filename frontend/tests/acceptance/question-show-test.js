@@ -40,7 +40,7 @@ test('the correct information is displayed', function() {
   visit('/questions/42');
 
   andThen(function() {
-    equal(find('.page-title').text(), 'really bad question title',
+    equal(find('.page-title:contains("really bad question")').length, 1,
       'Title found');
     ok(hasContent('asked by HeroicEric'), 'Author found');
     ok(hasContent('I write the worst questions'), 'Body found');
