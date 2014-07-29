@@ -1,0 +1,9 @@
+<h1 class="page-title">Questions</h1>
+
+{{link-to 'Ask a Question' 'questions.new' class='button'}}
+
+<ul class="question-list">
+{{#each question in model}}
+  <li class="question">{{link-to question.title 'questions.show' question.id}}</li>
+{{/each}}
+</ul>

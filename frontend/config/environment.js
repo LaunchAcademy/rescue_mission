@@ -18,6 +18,14 @@ module.exports = function(environment) {
     }
   };
 
+  ENV.torii = {
+    providers: {
+      'github-oauth2': {
+        scope: 'user:email'
+      }
+    }
+  };
+
   if (environment === 'development') {
     // LOG_MODULE_RESOLVER is needed for pre-1.6.0
     ENV.LOG_MODULE_RESOLVER = true;
@@ -28,14 +36,24 @@ module.exports = function(environment) {
     // ENV.APP.LOG_TRANSITIONS = true;
     // ENV.APP.LOG_TRANSITIONS_INTERNAL = true;
     ENV.APP.LOG_VIEW_LOOKUPS = true;
+
+    ENV.host = 'http://localhost:3000';
+    ENV.torii.providers['github-oauth2'].apiKey = '5c4f826abba8e1f95028';
+
+    ENV['simple-auth'] = {
+      authorizer: 'simple-auth-authorizer:oauth2-bearer',
+      crossOriginWhitelist: [ENV.host]
+    };
+
+    ENV['simple-auth-oauth2'] = {
+      serverTokenEndpoint: ENV.host + '/api/v1/authentications'
+    };
   }
 
   if (environment === 'test') {
-
   }
 
   if (environment === 'production') {
-
   }
 
   return ENV;
