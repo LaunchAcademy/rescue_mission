@@ -9,6 +9,6 @@ class QuestionSerializer < ActiveModel::Serializer
   has_one :user
 
   def can_edit
-    object.user_id == current_user.id
+    object.user == scope
   end
 end
