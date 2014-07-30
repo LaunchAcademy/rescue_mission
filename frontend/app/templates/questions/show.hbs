@@ -36,7 +36,9 @@
     </div>
 
     <div class="post-actions">
-      <a class="post-action--edit" href="#" {{action 'toggleIsEditing'}}>Edit</a>
+      {{#if canEdit}}
+        <a class="post-action--edit" href="#" {{action 'toggleIsEditing'}}>Edit</a>
+      {{/if}}
     </div>
   {{/if}}
 </div>

@@ -3,6 +3,8 @@ import startApp from '../helpers/start-app';
 
 var App, server;
 
+var editButton = '.post-action--edit';
+
 module('Acceptance: Editing a question', {
   setup: function() {
     App = startApp();
@@ -41,7 +43,7 @@ test('user successfully edits a question', function() {
       'Starting question title is displayed correctly');
   });
 
-  click('.post-action--edit');
+  click(editButton);
   fillIn('.question-form input[name="title"]',
     'Awesome new title for the question');
   fillIn('.question-form textarea[name="body"]',
@@ -58,18 +60,11 @@ test('user successfully edits a question', function() {
 
 test('user must be able to edit the question to see the edit buttons', function() {
   server.get('/api/v1/questions/:id', function(request) {
-    var question = {
-      id: 42,
-      can_edit: false
-    };
-
+    var question = { id: 42, can_edit: false };
     return jsonResponse(200, { question: question });
   });
 
   visit('/questions/42');
 
-  equal(find('.question__title__edit').length, 0,
-    'Edit question title button not displayed');
-  equal(find('.question__body__edit').length, 0,
-    'Edit question title button not displayed');
+  equal(find(editButton).length, 0, 'Edit question button not displayed');
 });
