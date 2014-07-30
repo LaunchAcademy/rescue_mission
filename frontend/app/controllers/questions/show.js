@@ -1,59 +1,34 @@
 import Ember from 'ember';
 
-export default Ember.ObjectController.extend({
-  isEditingTitle: false,
-  newTitle: null,
+export default Ember.ObjectController.extend(Ember.Validations.Mixin, {
+  isEditing: false,
 
-  isEditingBody: false,
-  newBody: null,
+  validations: {
+    title: {
+      length: { minimum: 15, maximum: 150 }
+    },
+    body: {
+      length: { minimum: 30, maximum: 10000 }
+    }
+  },
 
   actions: {
-    editTitle: function() {
-      this.set('isEditingTitle', true);
-      this.set('newTitle', this.get('title'));
+    toggleIsEditing: function() {
+      this.toggleProperty('isEditing');
     },
 
-    cancelEditTitle: function() {
-      this.set('isEditingTitle', false);
-      this.get('model').rollback();
-      this.set('newTitle', null);
-    },
-
-    saveTitle: function() {
+    save: function() {
       var _this = this;
-      var question = this.get('model');
-      question.set('title', this.get('newTitle'));
+      var model = this.get('model');
 
-      question.save().then(function() {
-        _this.set('isEditingTitle', false);
-        _this.set('newTitle', null);
-      }, function() {
-        // necessary for errors to be displayed
+      model.save().then(function() {
+        _this.set('isEditing', false);
       });
     },
 
-    editBody: function() {
-      this.set('isEditingBody', true);
-      this.set('newBody', this.get('body'));
-    },
-
-    cancelEditBody: function() {
-      this.set('isEditingBody', false);
+    cancel: function() {
       this.get('model').rollback();
-      this.set('newBody', null);
+      this.set('isEditing', false);
     },
-
-    saveBody: function() {
-      var _this = this;
-      var question = this.get('model');
-      question.set('body', this.get('newBody'));
-
-      question.save().then(function() {
-        _this.set('isEditingBody', false);
-        _this.set('newBody', null);
-      }, function() {
-        // necessary for errors to be displayed
-      });
-    }
   }
 });

@@ -17,8 +17,8 @@ module('Acceptance: Asking a question', {
 test('user asks a question', function() {
   server.post('/api/v1/questions', function(request) {
     var questionResponse = {
-      title: 'Help me, please!',
-      body: 'I have a really big problem',
+      title: 'Deploying Rails app to Heroku',
+      body: 'I need help deploying my awesome Rails app to Heroku!',
       user_id: 1
     };
 
@@ -28,9 +28,10 @@ test('user asks a question', function() {
   authenticateSession();
   visit('/questions/new');
 
-  fillIn('#question-title', 'Help me, please!');
-  fillIn('#question-body', 'I have a really big problem');
-  click('button:contains("Ask")');
+  fillIn('input[name="title"]', 'Deploying Rails app to Heroku');
+  fillIn('textarea[name="body"]', 'I need help deploying my awesome Rails app to Heroku!');
+
+  click('input[type="submit"]');
 
   andThen(function() {
     ok(hasContent('Thanks for asking!'),
@@ -40,26 +41,17 @@ test('user asks a question', function() {
   });
 });
 
-test('errors are displayed when asking question fails', function() {
-  server.post('/api/v1/questions', function(request) {
-    var errors = {
-      title: ["can't be blank"],
-      body: ["can't be blank"],
-    };
-
-    return jsonResponse(422, { errors: errors });
-  });
-
+test('form cannot be submitted without valid information', function() {
   authenticateSession();
 
   visit('/questions/new');
-  click('button:contains("Ask")');
+
+  fillIn('.question-form input[name="title"]', '2short');
+  fillIn('.question-form textarea[name="body"]', '2short');
 
   andThen(function() {
-    equal(currentRouteName(), 'questions.new',
-      'User stays on new question page');
-    ok(hasContent('There were some errors with your question.'),
-      'Error message displayed');
+    equal(find('input[type="submit"]').attr('disabled'), 'disabled',
+      'Submit button is disabled');
   });
 });
 

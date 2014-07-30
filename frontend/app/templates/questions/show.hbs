@@ -1,65 +1,42 @@
 <div class="question">
-  {{#if isEditingTitle}}
-    <form class="question__title__edit-form" {{action 'saveTitle' on='submit'}}>
-      <div class="row">
-        <div class="small-8 columns">
-          {{input value=newTitle}}
-          {{#each errors.title}}
-            <small class="error">{{message}}</small>
-          {{/each}}
-        </div>
-        <div class="small-2 columns">
-          <a href="#" class="button success postfix"
-            {{action 'saveTitle' newTitle}}>Save</a>
-        </div>
-        <div class="small-2 columns">
-          <a href="#" class="button alert postfix"
-            {{action 'cancelEditTitle'}}>Cancel</a>
-        </div>
-      </div>
-    </form>
-  {{else}}
-    <h1 class="page-title">
-      {{title}}
+  <div class="question__author">
+    <p>{{user.username}} asked:</p>
+  </div>
 
-      {{#if canEdit}}
-        <small>
-          <a href="#" class="question__title__edit"
-            {{action 'editTitle'}}>Edit</a>
-        </small>
-      {{/if}}
-    </h1>
-  {{/if}}
-
-  <p>asked by {{user.username}}</p>
-
-  <div class="question__body">
-    {{#if isEditingBody}}
-      <form class="question__body__edit-form" {{action 'saveBody' on='submit'}}>
+  {{#if isEditing}}
+    <div class="question-form">
+      {{#form-for controller action='save'}}
         <div class="row">
           <div class="small-12 columns">
-            {{textarea value=newBody cols="80" rows="6"}}
-            {{#each errors.body}}
-              <small class="error">{{message}}</small>
-            {{/each}}
+            {{input title placeholder="Deploying Rails app to Heroku"}}
+          </div>
+        </div>
+        <div class="row">
+          <div class="small-12 columns">
+            {{input body as='text' placeholder='Provide as many details as possible'}}
           </div>
         </div>
         <div class="row">
           <div class="small-6 columns">
-            <a href="#" class="button success expand"
-              {{action 'saveBody' newBody}}>Save</a>
+            {{submit "Save" class="button success expand"}}
           </div>
           <div class="small-6 columns">
-            <a href="#" class="button alert expand"
-              {{action 'cancelEditBody'}}>Cancel</a>
+            <a href="#" class="button secondary expand" {{action 'cancel'}}>
+              Cancel
+            </a>
           </div>
         </div>
-      </form>
-    {{else}}
+      {{/form-for}}
+    </div>
+  {{else}}
+    <h1 class="page-title">{{title}}</h1>
+
+    <div class="question__body">
       <p>{{body}}</p>
-      {{#if canEdit}}
-        <a href="#" class="question__body__edit" {{action 'editBody'}}>Edit</a>
-      {{/if}}
-    {{/if}}
-  </div>
+    </div>
+
+    <div class="post-actions">
+      <a class="post-action--edit" href="#" {{action 'toggleIsEditing'}}>Edit</a>
+    </div>
+  {{/if}}
 </div>

@@ -42,7 +42,9 @@ test('the correct information is displayed', function() {
   andThen(function() {
     equal(find('.page-title:contains("really bad question")').length, 1,
       'Title found');
-    ok(hasContent('asked by HeroicEric'), 'Author found');
-    ok(hasContent('I write the worst questions'), 'Body found');
+    equal(find('.question__author:contains("HeroicEric")').length, 1,
+      'Author found');
+    equal(find('.question__body:contains("I write the worst questions")').length, 1,
+      'Body found');
   });
 });
