@@ -6,8 +6,9 @@ export default AuthenticatedRoute.extend({
   },
 
   actions: {
-    save: function(model) {
+    save: function() {
       var _this = this;
+      var model = this.currentModel;
 
       model.save().then(function() {
         _this.wuphf.success('Thanks for asking!', 3000);
