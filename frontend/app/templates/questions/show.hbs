@@ -55,3 +55,11 @@
     </div>
   {{/each}}
 </div>
+
+<h3>Your Answer</h3>
+
+{{#if session.isAuthenticated}}
+  {{render 'answers.new' answer}}
+{{else}}
+  {{link-to 'Log in to post an answer' 'login'}}
+{{/if}}

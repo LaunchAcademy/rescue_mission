@@ -31,6 +31,58 @@ describe API::V1::AnswersController do
     end
   end
 
+  describe "GET #show" do
+    it "returns a answer" do
+      answer = FactoryGirl.create(:answer)
+      serialized_answer = AnswerSerializer.new(answer,
+        include: [:user, :question])
+
+      get :show, id: answer.id
+
+      expect(json).to be_json_eq serialized_answer
+    end
+  end
+
+  describe "POST #create" do
+    context "with valid access token" do
+      let(:api_key) { FactoryGirl.create(:api_key) }
+      let(:current_user) { api_key.user }
+
+      before do
+        mock_authentication_with(api_key)
+      end
+
+      context "with valid attributes" do
+        it "creates a new answer" do
+          question = FactoryGirl.create(:question)
+          answer_attributes = FactoryGirl.attributes_for(:answer)
+          answer_attributes[:question_id] = question.id
+
+          expect {
+            post :create, answer: answer_attributes
+          }.to change{Answer.count}.by(+1)
+
+          expect(response.status).to eq 201
+          expect(json).to be_json_eq AnswerSerializer.new(Answer.first, scope: current_user)
+        end
+      end
+
+      context "with invalid attributes" do
+        it "is not successful" do
+          post :create, answer: { invalid: '' }
+
+          expect(response.status).to eq 422
+        end
+      end
+    end
+
+    it "requires authentication" do
+      post :create, answer: { derp: 'mcderp' }
+
+      expect(response.status).to eq 401
+    end
+  end
+
   def response_includes?(answer)
     serialized_answer = AnswerSerializer.new(answer, root: false).to_json
     response.body.include?(serialized_answer)
