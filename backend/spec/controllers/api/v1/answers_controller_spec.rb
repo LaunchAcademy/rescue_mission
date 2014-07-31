@@ -83,6 +83,66 @@ describe API::V1::AnswersController do
     end
   end
 
+  describe "PUT #update" do
+    context "with valid access token" do
+      let(:api_key) { FactoryGirl.create(:api_key) }
+      let(:current_user) { api_key.user }
+
+      before do
+        mock_authentication_with(api_key)
+      end
+
+      context "when answer belongs to current user" do
+        context "with valid attributes" do
+          it "updates the answer" do
+            answer = FactoryGirl.create(:answer,
+              user: current_user,
+              body: "What's the name of the best band ever? I really like the Beatles but I'm not sure.")
+
+            expect {
+              put :update, id: answer.id,
+                answer: { body: "Just kidding, I'm not a troll. It's Mr. Vanilla Ice" }
+            }.to_not change{ Answer.count }
+
+            answer.reload
+            expect(response.status).to eq 200
+            expect(json).to be_json_eq AnswerSerializer.new(answer, scope: current_user)
+            expect(answer.body).to eq "Just kidding, I'm not a troll. It's Mr. Vanilla Ice"
+          end
+        end
+
+        context "with invalid attributes" do
+          it "is not successful" do
+            answer = FactoryGirl.create(:answer, user: current_user)
+
+            put :update, id: answer.id, answer: { body: '' }
+
+            expect(response.status).to eq 422
+          end
+        end
+      end
+
+      context "when answer belongs to another user" do
+        it "doesn't update the answer" do
+          answer = FactoryGirl.create(:answer)
+
+          expect {
+            put :update, id: answer.id,
+              answer: { body: "Doesn't really matter but I'll provide one" }
+          }.to raise_error ActiveRecord::RecordNotFound
+        end
+      end
+    end
+
+    context "without valid access token" do
+      it "is unauthorized" do
+        put :update, id: 'anything'
+
+        expect(response.status).to eq 401
+      end
+    end
+  end
+
   def response_includes?(answer)
     serialized_answer = AnswerSerializer.new(answer, root: false).to_json
     response.body.include?(serialized_answer)

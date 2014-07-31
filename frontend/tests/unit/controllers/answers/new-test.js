@@ -1,11 +1,9 @@
 import { test, moduleFor } from 'ember-qunit';
 
 moduleFor('controller:answers/new', 'AnswersNewController', {
-  // Specify the other units that are required for this test.
-  // needs: ['controller:foo']
+  needs: ['controller:questions/show']
 });
 
-// Replace this with your real tests.
 test('it exists', function() {
   var controller = this.subject();
   ok(controller);

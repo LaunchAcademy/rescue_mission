@@ -45,16 +45,7 @@
 
 <h2>Answers</h2>
 
-<div class="answer-list">
-  {{#each answers}}
-    <div class="answer">
-      <div class="answer__author">
-        <h4>@{{user.username}} said:</h4>
-        <p>{{body}}</p>
-      </div>
-    </div>
-  {{/each}}
-</div>
+{{render 'answers.list' answers}}
 
 <h3>Your Answer</h3>
 

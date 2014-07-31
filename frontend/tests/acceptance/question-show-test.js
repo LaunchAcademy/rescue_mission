@@ -39,7 +39,8 @@ module('Acceptance: Questions Show', {
         id: 2,
         body: 'I actually solved this myself by derping the derp',
         question_id: 1,
-        user_id: 1
+        user_id: 1,
+        can_edit: true
       }
     ];
 
@@ -72,7 +73,7 @@ test('answers are listed on the page', function() {
   visit('/questions/1');
 
   andThen(function() {
-    equal(find('.answer-list .answer').length, 2,
+    equal(find('.answers-list .answer').length, 2,
       'The correct number of answers are listed');
     ok(hasContent('You should just rm -rf *. That should fix it.'),
       'First answer found');
@@ -95,7 +96,7 @@ test('user answers a question successfully', function() {
   visit('/questions/1');
 
   andThen(function() {
-    initialAnswerCount = find('.answer-list .answer').length;
+    initialAnswerCount = find('.answers-list .answer').length;
   });
 
   fillIn('.answer-form textarea[name="body"]',
@@ -103,7 +104,7 @@ test('user answers a question successfully', function() {
   click('.answer-form input[type="submit"]');
 
   andThen(function() {
-    equal(find('.answer-list .answer').length, initialAnswerCount + 1,
+    equal(find('.answers-list .answer').length, initialAnswerCount + 1,
       'New answer added to the page');
     ok(hasContent('Thanks for answering!'),
       'Success notification displayed');
