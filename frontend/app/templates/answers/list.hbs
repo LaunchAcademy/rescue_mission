@@ -1,0 +1,39 @@
+<div class="answers-list">
+  {{#each}}
+    <div class="answer" {{bind-attr id=itemId}}>
+      <div class="answer__author">
+        <h4>@{{user.username}} said:</h4>
+      </div>
+
+      {{#if isEditing}}
+        <div class="answer-form">
+          {{#form-for controller action='save'}}
+            <div class="row">
+              <div class="small-12 columns">
+                {{input body as="text"}}
+              </div>
+            </div>
+            <div class="row">
+              <div class="small-6 columns">
+                {{submit 'Save' class='button success expand'}}
+              </div>
+              <div class="small-6 columns">
+                <button class="button secondary expand"{{action 'cancel'}}>Cancel</button>
+              </div>
+            </div>
+          {{/form-for}}
+        </div>
+      {{else}}
+        <div class="answer__body">
+          <p>{{body}}</p>
+        </div>
+
+        <div class="answer-actions">
+          {{#if canEdit}}
+            <a class="answer-actions__edit" href="#" {{action 'edit'}}>Edit</a>
+          {{/if}}
+        </div>
+      {{/if}}
+    </div>
+  {{/each}}
+</div>

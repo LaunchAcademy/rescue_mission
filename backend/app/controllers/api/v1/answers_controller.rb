@@ -1,6 +1,6 @@
 module API::V1
   class AnswersController < ApplicationController
-    before_action :ensure_valid_api_key!, only: [:create]
+    before_action :ensure_valid_api_key!, only: [:create, :update]
 
     def index
       @answers = Answer.includes(:user, :question).order(created_at: :desc).limit(25)
@@ -16,7 +16,7 @@ module API::V1
     end
 
     def create
-      @answer = current_user.answers.build(answer_params)
+      @answer = current_user.answers.build(create_answer_params)
       @answer.question
 
       if @answer.save
@@ -28,10 +28,24 @@ module API::V1
       end
     end
 
+    def update
+      @answer = current_user.answers.find(params[:id])
+
+      if @answer.update(update_answer_params)
+        render json: @answer, status: :ok, location: [:api, :v1, @answer]
+      else
+        render json: { errors: @answer.errors }, status: :unprocessable_entity
+      end
+    end
+
     private
 
-    def answer_params
+    def create_answer_params
       params.require(:answer).permit(:body, :question_id)
+    end
+
+    def update_answer_params
+      params.require(:answer).permit(:body)
     end
   end
 end
