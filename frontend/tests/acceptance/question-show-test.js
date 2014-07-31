@@ -56,7 +56,7 @@ module('Acceptance: Questions Show', {
 });
 
 test('question details are displayed', function() {
-  visit('/questions/42');
+  visit('/questions/1');
 
   andThen(function() {
     equal(find('.page-title:contains("really bad question")').length, 1,
@@ -69,7 +69,7 @@ test('question details are displayed', function() {
 });
 
 test('answers are listed on the page', function() {
-  visit('/questions/42');
+  visit('/questions/1');
 
   andThen(function() {
     equal(find('.answer-list .answer').length, 2,
@@ -78,5 +78,44 @@ test('answers are listed on the page', function() {
       'First answer found');
     ok(hasContent('I actually solved this myself by derping the derp'),
       'Second answer found');
+  });
+});
+
+test('user answers a question successfully', function() {
+  // Successful response
+  server.post('/api/v1/answers', function(request) {
+    var answerAttrFromRequest = JSON.parse(request.requestBody).answer;
+    var answer = Ember.merge(answerAttrFromRequest, { id: 1000, user_id: 2 });
+    return jsonResponse(200, { answer: answer });
+  });
+
+  var initialAnswerCount;
+
+  visit('/questions/1');
+
+  andThen(function() {
+    initialAnswerCount = find('.answer-list .answer').length;
+  });
+
+  fillIn('.answer-form textarea[name="body"]',
+    'I think you just need to restart your computer');
+  click('.answer-form input[type="submit"]');
+
+  andThen(function() {
+    equal(find('.answer-list .answer').length, initialAnswerCount + 1,
+      'New answer added to the page');
+    ok(hasContent('Thanks for answering!'),
+      'Success notification displayed');
+    equal(find('.answer-form textarea[name="body"]').val(), "",
+      'Answer form is reset');
+  });
+});
+
+test('user cannot submit an invalid answer', function() {
+  visit('/questions/1');
+
+  andThen(function() {
+    equal(find('.answer-form input[type="submit"]').attr('disabled'), 'disabled',
+      'Answer submit button is disabled');
   });
 });
