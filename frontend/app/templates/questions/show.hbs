@@ -58,9 +58,13 @@
 
 <h3>Your Answer</h3>
 
-<div class="answer-form">
-  {{#form-for answer action='saveAnswer'}}
-    {{input body as="text"}}
-    {{submit 'Post Answer' class='button'}}
-  {{/form-for}}
-</div>
+{{#if session.isAuthenticated}}
+  <div class="answer-form">
+    {{#form-for answer action='saveAnswer'}}
+      {{input body as="text"}}
+      {{submit 'Post Answer' class='button'}}
+    {{/form-for}}
+  </div>
+{{else}}
+  {{link-to 'Log in to post an answer' 'login'}}
+{{/if}}

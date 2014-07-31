@@ -91,6 +91,7 @@ test('user answers a question successfully', function() {
 
   var initialAnswerCount;
 
+  authenticateSession();
   visit('/questions/1');
 
   andThen(function() {
@@ -112,10 +113,22 @@ test('user answers a question successfully', function() {
 });
 
 test('user cannot submit an invalid answer', function() {
+  authenticateSession();
   visit('/questions/1');
 
   andThen(function() {
     equal(find('.answer-form input[type="submit"]').attr('disabled'), 'disabled',
       'Answer submit button is disabled');
+  });
+});
+
+test('posting an answer requires authentication', function() {
+  invalidateSession();
+  visit('/questions/1');
+
+  andThen(function() {
+    equal(find('.answer-form').length, 0, 'Answer form is not displayed');
+    equal(find('a:contains("Log in to post an answer")').length, 1,
+      'Message to sign in to post an answer displayed');
   });
 });
