@@ -30,3 +30,19 @@ questions_to_create.times do
 
   Question.create!(attributes)
 end
+
+answers_to_create = 10000 - Answer.count
+user_ids = User.pluck(:id)
+question_ids = Question.pluck(:id)
+
+answers_to_create.times do
+  attributes = {
+    question: Question.find(question_ids.sample),
+    user: User.find(user_ids.sample),
+    body: Faker::Lorem.paragraphs(rand(1..5)).join("\n\n")
+  }
+
+  puts "Creating Answer with: #{attributes}"
+
+  Answer.create!(attributes)
+end

@@ -7,26 +7,45 @@ module('Acceptance: Questions Show', {
   setup: function() {
     App = startApp();
 
-    var user = {
-      id: 12,
-      username: 'HeroicEric',
-      question_ids: [42]
-    };
+    var users = [
+      {
+        id: 1,
+        username: 'HeroicEric',
+        question_ids: [42]
+      },
+      {
+        id: 2,
+        username: 'OtherGuy',
+        question_ids: []
+      }
+    ];
 
     var question = {
-      id: 42,
-      user_id: 12,
+      id: 1,
+      user_id: 1,
       title: 'really bad question title',
-      body: 'I write the worst questions'
+      body: 'I write the worst questions',
+      answer_ids: [1, 2]
     };
+
+    var answers = [
+      {
+        id: 1,
+        body: 'You should just rm -rf *. That should fix it.',
+        question_id: 1,
+        user_id: 2
+      },
+      {
+        id: 2,
+        body: 'I actually solved this myself by derping the derp',
+        question_id: 1,
+        user_id: 1
+      }
+    ];
 
     server = new Pretender(function(){
       this.get('/api/v1/questions/:id', function(request) {
-        return jsonResponse(200, { question: question });
-      });
-
-      this.get('/api/v1/users/:id', function(request) {
-        return jsonResponse(200, { user: user });
+        return jsonResponse(200, { question: question, answers: answers, users: users });
       });
     });
   },
@@ -36,7 +55,7 @@ module('Acceptance: Questions Show', {
   }
 });
 
-test('the correct information is displayed', function() {
+test('question details are displayed', function() {
   visit('/questions/42');
 
   andThen(function() {
@@ -46,5 +65,18 @@ test('the correct information is displayed', function() {
       'Author found');
     equal(find('.question__body:contains("I write the worst questions")').length, 1,
       'Body found');
+  });
+});
+
+test('answers are listed on the page', function() {
+  visit('/questions/42');
+
+  andThen(function() {
+    equal(find('.answer-list .answer').length, 2,
+      'The correct number of answers are listed');
+    ok(hasContent('You should just rm -rf *. That should fix it.'),
+      'First answer found');
+    ok(hasContent('I actually solved this myself by derping the derp'),
+      'Second answer found');
   });
 });
