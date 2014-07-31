@@ -2,7 +2,7 @@ import Ember from 'ember';
 import { test, moduleForModel } from 'ember-qunit';
 
 moduleForModel('question', 'Question', {
-  needs: ['model:user']
+  needs: ['model:user', 'model:answer']
 });
 
 test('canEdit defaults to false', function() {

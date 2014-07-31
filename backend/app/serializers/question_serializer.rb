@@ -7,6 +7,7 @@ class QuestionSerializer < ActiveModel::Serializer
     :title
 
   has_one :user
+  has_many :answers
 
   def can_edit
     object.user == scope

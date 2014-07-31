@@ -3,11 +3,13 @@ module API::V1
     before_action :ensure_valid_api_key!, only: [:create, :update]
 
     def index
-      render json: Question.includes(:user).order(created_at: :desc).limit(25)
+      render json: Question.includes(:user, :answers).order(created_at: :desc).limit(25)
     end
 
     def show
-      render json: Question.find(params[:id])
+      @question = Question.includes(:user, answers: :user).find(params[:id])
+
+      render json: @question, include: [:user, :answers]
     end
 
     def create
