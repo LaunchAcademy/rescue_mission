@@ -4,12 +4,17 @@ class QuestionSerializer < ActiveModel::Serializer
   attributes :id,
     :body,
     :can_edit,
-    :title
+    :title,
+    :can_accept_answer
 
   has_one :user
   has_many :answers
 
   def can_edit
     object.user == scope
+  end
+
+  def can_accept_answer
+    object.user == scope && !object.accepted_answer
   end
 end

@@ -6,4 +6,8 @@ class Question < ActiveRecord::Base
   validates :body, length: { in: 30..10000 }
   validates :title, length: { in: 15..150 }
   validates :user, presence: true
+
+  def accepted_answer
+    answers.find_by(accepted: true)
+  end
 end
