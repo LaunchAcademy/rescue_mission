@@ -14,9 +14,8 @@
     "ember-cli-test-loader": "rjackson/ember-cli-test-loader#0.0.2"
   },
   "devDependencies": {
-    "foundation": "~5.3.1"
-  },
-  "resolutions": {
-    "jquery": ">= 1.7.0 <= 2.1.0"
+    "foundation": "~5.3.1",
+    "ember-validations": "http://builds.dockyard.com.s3.amazonaws.com/ember-validations/latest/ember-validations.js",
+    "ember-easyForm": "http://builds.dockyard.com.s3.amazonaws.com/ember-easyForm/latest/ember-easyForm.js"
   }
 }

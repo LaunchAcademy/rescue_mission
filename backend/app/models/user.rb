@@ -1,6 +1,7 @@
 class User < ActiveRecord::Base
   has_many :api_keys, dependent: :destroy
   has_many :questions, dependent: :destroy
+  has_many :answers, dependent: :destroy
 
   validates :email, presence: true, uniqueness: true
   validates :provider, presence: true

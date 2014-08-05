@@ -1,10 +1,9 @@
 import DS from 'ember-data';
 
 export default DS.Model.extend({
+  question: DS.belongsTo('question', { async: true }),
   user: DS.belongsTo('user', { async: true }),
-  answers: DS.hasMany('answer', { async: true }),
 
   body: DS.attr('string'),
-  canEdit: DS.attr('boolean', { defaultValue: false }),
-  title: DS.attr('string'),
+  canEdit: DS.attr('boolean', { defaultValue: false })
 });
