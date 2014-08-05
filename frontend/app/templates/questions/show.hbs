@@ -35,13 +35,19 @@
       <p>{{body}}</p>
     </div>
 
-    {{comment-form}}
-
     <div class="post-actions">
       {{#if canEdit}}
         <a class="post-action--edit" href="#" {{action 'toggleIsEditing'}}>Edit</a>
       {{/if}}
     </div>
+
+    {{#if comments}}
+      <h5 class="subheader">Comments</h5>
+      {{render 'comments.list' comments}}
+    {{/if}}
+
+    <h5 class="subheader">Add Comment</h5>
+    {{render 'comments.new' comment}}
   {{/if}}
 </div>
 

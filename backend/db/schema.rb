@@ -37,6 +37,7 @@ ActiveRecord::Schema.define(version: 20140803151906) do
 
   create_table "comments", force: true do |t|
     t.text     "body",             null: false
+    t.integer  "user_id",          null: false
     t.integer  "commentable_id",   null: false
     t.string   "commentable_type", null: false
     t.datetime "created_at"
@@ -44,6 +45,7 @@ ActiveRecord::Schema.define(version: 20140803151906) do
   end
 
   add_index "comments", ["commentable_id", "commentable_type"], name: "index_comments_on_commentable_id_and_commentable_type", using: :btree
+  add_index "comments", ["user_id"], name: "index_comments_on_user_id", using: :btree
 
   create_table "questions", force: true do |t|
     t.integer  "user_id",    null: false
