@@ -10,12 +10,11 @@ describe Answer do
     it { should ensure_length_of(:body).is_at_least(30).is_at_most(10000) }
     it { should validate_presence_of(:user) }
     it { should validate_presence_of(:question) }
-    it { should ensure_inclusion_of(:accepted).in_array([true, false]) }
 
     it "should validate that only one answer per question can be marked accepted" do
       FactoryGirl.create(:answer, accepted: true)
 
-      expect { FactoryGirl.create(:answer, accepted: true) }.to raise_error
+      expect { FactoryGirl.create(:answer, accepted: true) }.to raise_error.with_message(/Accepted has already been taken/)
     end
   end
 end
