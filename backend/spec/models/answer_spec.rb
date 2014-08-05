@@ -14,7 +14,7 @@ describe Answer do
     it "should validate that only one answer per question can be marked accepted" do
       FactoryGirl.create(:answer, accepted: true)
 
-      expect { FactoryGirl.create(:answer, accepted: true) }.to raise_error.with_message(/Accepted has already been taken/)
+      expect { FactoryGirl.create(:answer, accepted: true) }.to raise_error.with_message(/answer has already been accepted/)
     end
   end
 end
