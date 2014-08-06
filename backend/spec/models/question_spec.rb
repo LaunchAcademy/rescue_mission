@@ -4,6 +4,7 @@ describe Question do
   describe "associations" do
     it { should belong_to :user }
     it { should have_many(:answers).dependent(:destroy) }
+    it { should have_many(:comments).dependent(:destroy) }
   end
 
   describe "validations" do

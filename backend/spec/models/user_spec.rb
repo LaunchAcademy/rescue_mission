@@ -5,6 +5,7 @@ describe User do
     it { should have_many(:api_keys).dependent(:destroy) }
     it { should have_many(:questions).dependent(:destroy) }
     it { should have_many(:answers).dependent(:destroy) }
+    it { should have_many(:comments).dependent(:destroy) }
   end
 
   describe "validations" do

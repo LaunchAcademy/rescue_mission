@@ -23,7 +23,7 @@ describe API::V1::QuestionsController do
     it "returns a question" do
       question = FactoryGirl.create(:question)
       serialized_question = QuestionSerializer.new(question,
-        include: [:user, :answers])
+        include: [:user, :answers, :comments])
 
       get :show, id: question.id
 

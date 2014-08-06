@@ -46,3 +46,20 @@ answers_to_create.times do
 
   Answer.create!(attributes)
 end
+
+comments_to_create = 10000 - Comment.count
+user_ids = User.pluck(:id)
+question_ids = Question.pluck(:id)
+
+comments_to_create.times do
+  question = Question.find(question_ids.sample)
+
+  attributes = {
+    user: User.find(user_ids.sample),
+    body: Faker::Lorem.paragraph
+  }
+
+  puts "Creating Question Comment with: #{attributes}"
+
+  question.comments.create!(attributes)
+end
