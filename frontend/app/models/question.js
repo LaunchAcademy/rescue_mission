@@ -7,4 +7,5 @@ export default DS.Model.extend({
   body: DS.attr('string'),
   canEdit: DS.attr('boolean', { defaultValue: false }),
   title: DS.attr('string'),
+  canAcceptAnswer: DS.attr('boolean', { defaultValue: false})
 });

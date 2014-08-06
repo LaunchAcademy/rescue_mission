@@ -32,6 +32,11 @@
           {{#if canEdit}}
             <a class="answer-actions__edit" href="#" {{action 'edit'}}>Edit</a>
           {{/if}}
+
+          {{#if question.canAcceptAnswer }}
+            <h2>{{session.currentUser.username}}</h2>
+            <a class="answer-actions__accept" href="#" {{ action 'accept'}}>Accept Answer</a>
+          {{/if}}
         </div>
       {{/if}}
     </div>
