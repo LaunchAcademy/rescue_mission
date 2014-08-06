@@ -47,7 +47,11 @@
     {{/if}}
 
     <h5 class="subheader">Add Comment</h5>
-    {{render 'comments.new' comment}}
+    {{#if session.isAuthenticated}}
+      {{render 'comments.new' comment}}
+    {{else}}
+      {{link-to 'Log in to post a comment' 'login'}}
+    {{/if}}
   {{/if}}
 </div>
 

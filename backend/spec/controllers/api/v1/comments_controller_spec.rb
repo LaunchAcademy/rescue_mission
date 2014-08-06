@@ -31,6 +31,58 @@ describe API::V1::CommentsController do
     end
   end
 
+  describe "GET #show" do
+    it "returns a comment" do
+      comment = FactoryGirl.create(:comment)
+      serialized_comment = CommentSerializer.new(comment)
+
+      get :show, id: comment.id
+
+      expect(json).to be_json_eq serialized_comment
+    end
+  end
+
+  describe "POST #create" do
+    context "with valid access token" do
+      let(:api_key) { FactoryGirl.create(:api_key) }
+      let(:current_user) { api_key.user }
+
+      before do
+        mock_authentication_with(api_key)
+      end
+
+      context "with valid attributes" do
+        it "creates a new comment" do
+          question = FactoryGirl.create(:question)
+          comment_attributes = FactoryGirl.attributes_for(:comment)
+          comment_attributes[:commentable_id] = question.id
+          comment_attributes[:commentable_type] = 'Question'
+
+          expect {
+            post :create, comment: comment_attributes
+          }.to change{Comment.count}.by(+1)
+
+          expect(response.status).to eq 201
+          expect(json).to be_json_eq CommentSerializer.new(Comment.first, scope: current_user)
+        end
+      end
+
+      context "with invalid attributes" do
+        it "is not successful" do
+          post :create, comment: { invalid: '' }
+
+          expect(response.status).to eq 422
+        end
+      end
+    end
+
+    it "requires authentication" do
+      post :create, comment: { derp: 'mcderp' }
+
+      expect(response.status).to eq 401
+    end
+  end
+
   def response_includes?(answer)
     serialized_answer = CommentSerializer.new(answer, root: false).to_json
     response.body.include?(serialized_answer)

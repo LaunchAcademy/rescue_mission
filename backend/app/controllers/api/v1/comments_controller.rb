@@ -8,5 +8,29 @@ module API::V1
 
       render json: @comments, include: [:user]
     end
+
+    def show
+      @comment = Comment.find(params[:id])
+
+      render json: @comment
+    end
+
+    def create
+      @comment = current_user.comments.build(comment_params)
+      @comment.commentable
+
+      if @comment.save
+        render json: @comment,
+          status: :created,
+          location: [:api, :v1, @comment]
+      else
+        render json: { errors: @comment.errors }, status: :unprocessable_entity
+      end
+    end
+
+    private
+    def comment_params
+      params.require(:comment).permit(:body, :commentable_id, :commentable_type)
+    end
   end
 end
