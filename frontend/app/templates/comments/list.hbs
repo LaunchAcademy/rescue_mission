@@ -1,12 +1,38 @@
 <div class="comment-list">
   {{#each}}
     <div class="comment" {{bind-attr id=itemId}}>
-      <div class="comment__body">
-        <p>{{body}}</p>
-      </div>
+      {{#if isEditing}}
+        <div class="comment-form">
+          {{#form-for controller action='save'}}
+            <div class="row">
+              <div class="small-12 columns">
+                {{input body as="text"}}
+              </div>
+            </div>
+            <div class="row">
+              <div class="small-6 columns">
+                {{submit "Save" class="button success expand"}}
+              </div>
+              <div class="small-6 columns">
+                <button class="button secondary expand" {{action 'cancel'}}>Cancel</button>
+              </div>
+            </div>
+          {{/form-for}}
+        </div>
+      {{else}}
+        <div class="comment__body">
+          <p>{{body}}</p>
+        </div>
+      {{/if}}
 
       <div class="comment__author">
         <p>@{{user.username}}</p>
+      </div>
+
+      <div class="comment-actions">
+        {{#if canEdit}}
+          <a class="comment-actions__edit" href="#" {{action 'edit'}}>Edit</a>
+        {{/if}}
       </div>
     </div>
   {{/each}}

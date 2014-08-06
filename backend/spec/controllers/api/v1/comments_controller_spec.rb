@@ -83,8 +83,68 @@ describe API::V1::CommentsController do
     end
   end
 
-  def response_includes?(answer)
-    serialized_answer = CommentSerializer.new(answer, root: false).to_json
-    response.body.include?(serialized_answer)
+  describe "PUT #update" do
+    context "with valid access token" do
+      let(:api_key) { FactoryGirl.create(:api_key) }
+      let(:current_user) { api_key.user }
+
+      before do
+        mock_authentication_with(api_key)
+      end
+
+      context "when comment belongs to current user" do
+        context "with valid attributes" do
+          it "updates the comment" do
+            comment = FactoryGirl.create(:comment,
+              user: current_user,
+              body: "What's the name of the best band ever? I really like the Beatles but I'm not sure.")
+
+            expect {
+              put :update, id: comment.id,
+                comment: { body: "Just kidding, I'm not a troll. It's Mr. Vanilla Ice" }
+            }.to_not change{ Comment.count }
+
+            comment.reload
+            expect(response.status).to eq 200
+            expect(json).to be_json_eq CommentSerializer.new(comment, scope: current_user)
+            expect(comment.body).to eq "Just kidding, I'm not a troll. It's Mr. Vanilla Ice"
+          end
+        end
+
+        context "with invalid attributes" do
+          it "is not successful" do
+            comment = FactoryGirl.create(:comment, user: current_user)
+
+            put :update, id: comment.id, comment: { body: '' }
+
+            expect(response.status).to eq 422
+          end
+        end
+      end
+
+      context "when comment belongs to another user" do
+        it "doesn't update the comment" do
+          comment = FactoryGirl.create(:comment)
+
+          expect {
+            put :update, id: comment.id,
+              comment: { body: "Doesn't really matter but I'll provide one" }
+          }.to raise_error ActiveRecord::RecordNotFound
+        end
+      end
+    end
+
+    context "without valid access token" do
+      it "is unauthorized" do
+        put :update, id: 'anything'
+
+        expect(response.status).to eq 401
+      end
+    end
+  end
+
+  def response_includes?(comment)
+    serialized_comment = CommentSerializer.new(comment, root: false).to_json
+    response.body.include?(serialized_comment)
   end
 end
