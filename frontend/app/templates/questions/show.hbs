@@ -46,11 +46,18 @@
       {{render 'comments.list' comments}}
     {{/if}}
 
-    <h5 class="subheader">Add Comment</h5>
+
     {{#if session.isAuthenticated}}
-      {{render 'comments.new' comment}}
+      <a class="add-comment button secondary tiny"
+        href="#" {{action 'addComment'}}>
+        Comment
+      </a>
     {{else}}
       {{link-to 'Log in to post a comment' 'login'}}
+    {{/if}}
+
+    {{#if isCommenting}}
+      {{render 'comments.new'}}
     {{/if}}
   {{/if}}
 </div>
