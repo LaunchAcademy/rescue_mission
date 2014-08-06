@@ -17,7 +17,6 @@ module API::V1
 
     def create
       @comment = current_user.comments.build(create_comment_params)
-      @comment.commentable
 
       if @comment.save
         render json: @comment,

@@ -17,7 +17,6 @@ module API::V1
 
     def create
       @answer = current_user.answers.build(create_answer_params)
-      @answer.question
 
       if @answer.save
         render json: @answer,
