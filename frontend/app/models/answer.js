@@ -5,5 +5,6 @@ export default DS.Model.extend({
   user: DS.belongsTo('user', { async: true }),
 
   body: DS.attr('string'),
+  accepted: DS.attr('boolean'),
   canEdit: DS.attr('boolean', { defaultValue: false })
 });

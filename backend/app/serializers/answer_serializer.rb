@@ -1,7 +1,7 @@
 class AnswerSerializer < ActiveModel::Serializer
   embed :ids
 
-  attributes :id, :body, :can_edit
+  attributes :id, :body, :accepted, :can_edit
 
   has_one :user
   has_one :question
