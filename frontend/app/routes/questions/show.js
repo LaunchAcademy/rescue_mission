@@ -8,6 +8,7 @@ export default Ember.Route.extend({
   setupController: function(controller, model) {
     this._super(controller, model);
     controller.set('answer', this.store.createRecord('answer'));
+    controller.set('comment', this.store.createRecord('comment'));
   },
 
   actions: {

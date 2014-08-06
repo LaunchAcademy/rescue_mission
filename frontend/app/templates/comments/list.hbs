@@ -1,0 +1,13 @@
+<div class="comment-list">
+  {{#each}}
+    <div class="comment" {{bind-attr id=itemId}}>
+      <div class="comment__body">
+        <p>{{body}}</p>
+      </div>
+
+      <div class="comment__author">
+        <p>@{{user.username}}</p>
+      </div>
+    </div>
+  {{/each}}
+</div>
