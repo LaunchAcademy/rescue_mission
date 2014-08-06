@@ -7,9 +7,9 @@ module API::V1
     end
 
     def show
-      @question = Question.includes(:user, answers: :user).find(params[:id])
+      @question = Question.includes(:user, :comments, answers: :user).find(params[:id])
 
-      render json: @question, include: [:user, :answers]
+      render json: @question, include: [:answers, :comments, :user]
     end
 
     def create
