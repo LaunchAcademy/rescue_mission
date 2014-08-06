@@ -32,6 +32,10 @@
           {{#if canEdit}}
             <a class="answer-actions__edit" href="#" {{action 'edit'}}>Edit</a>
           {{/if}}
+
+          {{#if question.canAcceptAnswer }}
+            <a class="answer-actions__accept" href="#" {{ action 'accept'}}>Accept Answer</a>
+          {{/if}}
         </div>
       {{/if}}
     </div>
