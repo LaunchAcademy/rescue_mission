@@ -16,7 +16,7 @@ module API::V1
     end
 
     def create
-      @comment = current_user.comments.build(comment_params)
+      @comment = current_user.comments.build(create_comment_params)
       @comment.commentable
 
       if @comment.save
@@ -28,9 +28,23 @@ module API::V1
       end
     end
 
+    def update
+      @comment = current_user.comments.find(params[:id])
+
+      if @comment.update(update_comment_params)
+        render json: @comment, status: :ok, location: [:api, :v1, @comment]
+      else
+        render json: { errors: @comment.errors }, status: :unprocessable_entity
+      end
+    end
+
     private
-    def comment_params
+    def create_comment_params
       params.require(:comment).permit(:body, :commentable_id, :commentable_type)
+    end
+
+    def update_comment_params
+      params.require(:comment).permit(:body)
     end
   end
 end
