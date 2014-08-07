@@ -16,6 +16,7 @@
   "devDependencies": {
     "foundation": "~5.3.1",
     "ember-validations": "http://builds.dockyard.com.s3.amazonaws.com/ember-validations/latest/ember-validations.js",
-    "ember-easyForm": "http://builds.dockyard.com.s3.amazonaws.com/ember-easyForm/latest/ember-easyForm.js"
+    "ember-easyForm": "http://builds.dockyard.com.s3.amazonaws.com/ember-easyForm/latest/ember-easyForm.js",
+    "marked": "~0.3.2"
   }
 }
