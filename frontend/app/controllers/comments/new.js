@@ -1,6 +1,6 @@
 import Ember from 'ember';
 
-export default Ember.ObjectController.extend(Ember.Validations.Mixin, {
+export default Ember.Controller.extend(Ember.Validations.Mixin, {
   commentable: Ember.computed.alias('parentController.model'),
 
   validations: {
@@ -11,21 +11,25 @@ export default Ember.ObjectController.extend(Ember.Validations.Mixin, {
 
   actions: {
     submit: function() {
-      var commentable = this.get('commentable');
-      var comment = this.get('model');
       var _this = this;
-
-      comment.set('commentable', commentable);
+      var commentable = this.get('commentable');
+      var comment = this.store.createRecord('comment', {
+        commentable: commentable,
+        body: this.get('body')
+      });
 
       comment.save().then(function() {
         commentable.get('comments').pushObject(comment);
+        _this.set('body', '');
+        _this.parentController.set('isCommenting', false);
         _this.wuphf.success('Comment created succesfully!', 3000);
-
-        var newComment= _this.store.createRecord('comment');
-        _this.set('model', newComment);
       }, function() {
         _this.wuphf.danger('There was an issue with your comment. Please try again.', 3000);
       });
+    },
+
+    cancel: function() {
+      this.parentController.set('isCommenting', false);
     }
   }
 });

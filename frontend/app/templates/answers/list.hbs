@@ -28,11 +28,24 @@
           <p>{{body}}</p>
         </div>
 
-        <div class="answer-actions">
+        <ul class="answer-actions button-group">
           {{#if canEdit}}
-            <a class="answer-actions__edit" href="#" {{action 'edit'}}>Edit</a>
+            <li><a class="answer-actions__edit button secondary tiny" href="#" {{action 'edit'}}>Edit</a></li>
           {{/if}}
-        </div>
+        </ul>
+      {{/if}}
+
+      {{render 'comments.list' comments}}
+
+      {{#if session.isAuthenticated}}
+        <a class="add-comment button secondary tiny"
+          href="#" {{action 'addComment'}}>
+          Comment
+        </a>
+      {{/if}}
+
+      {{#if isCommenting}}
+        {{render 'comments.new'}}
       {{/if}}
     </div>
   {{/each}}

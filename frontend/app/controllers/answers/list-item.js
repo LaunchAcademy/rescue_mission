@@ -1,7 +1,9 @@
 import Ember from 'ember';
 
 export default Ember.ObjectController.extend(Ember.Validations.Mixin, {
+  isCommenting: false,
   isEditing: false,
+
   itemId: function() {
     return 'answer-' + this.get('id');
   }.property('id'),
@@ -31,6 +33,10 @@ export default Ember.ObjectController.extend(Ember.Validations.Mixin, {
       }, function() {
         _this.wuphf.danger('Something went wrong. Please try again.', 3000);
       });
+    },
+
+    addComment: function() {
+      this.set('isCommenting', true);
     }
   }
 });

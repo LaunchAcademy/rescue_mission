@@ -6,6 +6,8 @@ class AnswerSerializer < ActiveModel::Serializer
   has_one :user
   has_one :question
 
+  has_many :comments
+
   def can_edit
     object.user == scope
   end

@@ -1,6 +1,7 @@
 import Ember from 'ember';
 
 export default Ember.ObjectController.extend(Ember.Validations.Mixin, {
+  isCommenting: false,
   isEditing: false,
 
   validations: {
@@ -30,5 +31,9 @@ export default Ember.ObjectController.extend(Ember.Validations.Mixin, {
       this.get('model').rollback();
       this.set('isEditing', false);
     },
+
+    addComment: function() {
+      this.set('isCommenting', true);
+    }
   }
 });
