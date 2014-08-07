@@ -26,5 +26,6 @@ app.import('vendor/torii/torii.amd.js', {
 
 app.import('vendor/ember-validations/index.js');
 app.import('vendor/ember-easyForm/index.js');
+app.import('vendor/marked/lib/marked.js');
 
 module.exports = app.toTree();
