@@ -1,10 +1,6 @@
 <div class="answers-list">
   {{#each}}
     <div class="answer" {{bind-attr id=itemId}}>
-      <div class="answer__author">
-        <h4>@{{user.username}} said:</h4>
-      </div>
-
       {{#if isEditing}}
         <div class="answer-form">
           {{#form-for controller action='save'}}
@@ -27,26 +23,31 @@
         <div class="answer__body">
           {{format-markdown body}}
         </div>
-
-        <ul class="answer-actions button-group">
-          {{#if canEdit}}
-            <li><a class="answer-actions__edit button secondary tiny" href="#" {{action 'edit'}}>Edit</a></li>
-          {{/if}}
-        </ul>
       {{/if}}
+
+      <div class="row">
+        <div class="small-6 columns">
+          <div class="post-actions">
+            {{#if canEdit}}
+              <a class="answer-actions__edit button secondary tiny"
+                href="#" {{action 'edit'}}>Edit</a>
+            {{/if}}
+          </div>
+        </div>
+        <div class="small-6 columns">
+          <div class="answer__author text-right">
+            <p>- @{{user.username}}</p>
+          </div>
+        </div>
+      </div>
 
       {{render 'comments.list' comments}}
-
-      {{#if session.isAuthenticated}}
-        <a class="add-comment button secondary tiny"
-          href="#" {{action 'addComment'}}>
-          Comment
-        </a>
-      {{/if}}
 
       {{#if isCommenting}}
         {{render 'comments.new'}}
       {{/if}}
     </div>
+
+    <hr>
   {{/each}}
 </div>

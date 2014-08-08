@@ -1,8 +1,4 @@
 <div class="question">
-  <div class="question__author">
-    <p>{{user.username}} asked:</p>
-  </div>
-
   {{#if isEditing}}
     <div class="question-form">
       {{#form-for controller action='save'}}
@@ -35,25 +31,25 @@
       {{format-markdown body}}
     </div>
 
-    <div class="post-actions">
-      {{#if canEdit}}
-        <a class="post-action--edit" href="#" {{action 'toggleIsEditing'}}>Edit</a>
-      {{/if}}
+    <div class="row">
+      <div class="small-6 columns">
+        <div class="post-actions">
+          {{#if canEdit}}
+            <a class="post-action--edit" href="#" {{action 'toggleIsEditing'}}>Edit</a>
+          {{/if}}
+        </div>
+      </div>
+      <div class="small-6 columns">
+        <div class="question__author text-right">
+          <p>asked by @{{user.username}}</p>
+        </div>
+      </div>
     </div>
 
+    <hr>
+
     {{#if comments}}
-      <h5 class="subheader">Comments</h5>
       {{render 'comments.list' comments}}
-    {{/if}}
-
-
-    {{#if session.isAuthenticated}}
-      <a class="add-comment button secondary tiny"
-        href="#" {{action 'addComment'}}>
-        Comment
-      </a>
-    {{else}}
-      {{link-to 'Log in to post a comment' 'login'}}
     {{/if}}
 
     {{#if isCommenting}}
