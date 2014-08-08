@@ -1,5 +1,9 @@
-@import 'vendor/foundation/scss/normalize.scss';
-@import 'vendor/foundation/scss/foundation.scss';
+@import 'vendor/foundation/scss/normalize';
+@import 'settings';
+@import 'vendor/foundation/scss/foundation';
+
+// Components
+@import 'components/post';
 
 .wuphf-message {
   @extend .alert-box;
