@@ -44,9 +44,9 @@ test('all comments for question are displayed', function() {
 
   andThen(function() {
     equal(find('.comment-list .comment').length, 2, 'Correct number of comments are listed');
-    equal(find('.comment__body:contains("You should just rm -rf *. That should fix it.")').length, 1,
+    equal(find('.post__content:contains("You should just rm -rf *. That should fix it.")').length, 1,
       'First comment found');
-    equal(find('.comment__body:contains("I actually solved this myself by derping the derp")').length, 1,
+    equal(find('.post__content:contains("I actually solved this myself by derping the derp")').length, 1,
       'Second comment found');
   });
 });

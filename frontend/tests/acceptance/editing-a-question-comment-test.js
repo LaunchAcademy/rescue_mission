@@ -64,7 +64,7 @@ test('user successfully comments on a question', function() {
     initialCommentCount = find('.question .comment-list .comment').length;
   });
 
-  click('#comment-1 .comment-actions__edit');
+  click('#comment-1 .post__action--edit');
   fillIn('#comment-1 textarea[name="body"]', newBody);
   click('#comment-1 input[type="submit"]');
 
@@ -80,7 +80,7 @@ test('user cannot submit an invalid comment', function() {
   authenticateSession();
   visit('/questions/1');
 
-  click('#comment-1 .comment-actions__edit');
+  click('#comment-1 .post__action--edit');
   fillIn('#comment-1 textarea[name="body"]', '');
 
   andThen(function() {

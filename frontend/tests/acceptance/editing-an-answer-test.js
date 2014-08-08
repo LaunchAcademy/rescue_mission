@@ -48,9 +48,9 @@ test('editing an answer requires authorization', function() {
   visit('/questions/1');
 
   andThen(function() {
-    equal(find('#answer-1 .answer-actions__edit').length, 1,
+    equal(find('#answer-1 .post__action--edit').length, 1,
       'Edit button shown for editable answer');
-    equal(find('#answer-2 .answer-actions__edit').length, 0,
+    equal(find('#answer-2 .post__action--edit').length, 0,
       'Edit button not shown for uneditable answer');
   });
 });
@@ -68,12 +68,12 @@ test('user edits an answer successfully', function() {
 
   visit('/questions/1');
 
-  click('#answer-1 .answer-actions__edit');
+  click('#answer-1 .post__action--edit');
   fillIn('.answer-form textarea[name="body"]', newAnswerBody);
   click('#answer-1 input[type="submit"]');
 
   andThen(function() {
-    equal(find('#answer-1 .answer__body:contains("' + newAnswerBody + '")').length, 1,
+    equal(find('#answer-1 .post__content:contains("' + newAnswerBody + '")').length, 1,
       'Answer body was updated');
   });
 });

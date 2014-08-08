@@ -1,43 +1,45 @@
 <div class="answers-list">
   {{#each}}
-    <div class="answer" {{bind-attr id=itemId}}>
-      {{#if isEditing}}
-        <div class="answer-form">
-          {{#form-for controller action='save'}}
-            <div class="row">
-              <div class="small-12 columns">
-                {{input body as="text"}}
-              </div>
-            </div>
-            <div class="row">
-              <div class="small-6 columns">
-                {{submit 'Save' class='button success expand'}}
-              </div>
-              <div class="small-6 columns">
-                <button class="button secondary expand "{{action 'cancel'}}>Cancel</button>
-              </div>
-            </div>
-          {{/form-for}}
-        </div>
-      {{else}}
-        <div class="answer__body">
-          {{format-markdown body}}
-        </div>
-      {{/if}}
+    <div {{bind-attr id=itemId}} class="post-wrapper">
+      <div class="post-avatar">
+        <a href="#"><img src="http://placekitten.com/g/48/48"></a>
+      </div>
 
-      <div class="row">
-        <div class="small-6 columns">
-          <div class="post-actions">
+      <div class="post answer">
+        <div class="post__header">
+          <div class="post__header__text">
+            <strong>@{{user.username}}</strong>
+            answered
+          </div>
+          <div class="post__header__actions">
             {{#if canEdit}}
-              <a class="answer-actions__edit button secondary tiny"
-                href="#" {{action 'edit'}}>Edit</a>
+              <a class="post__action--edit" href="#" {{action 'edit'}}><i class="fa fa-pencil"></i></a>
             {{/if}}
           </div>
         </div>
-        <div class="small-6 columns">
-          <div class="answer__author text-right">
-            <p>- @{{user.username}}</p>
-          </div>
+
+        <div class="post__content">
+          {{#if isEditing}}
+            <div class="answer-form">
+              {{#form-for controller action='save'}}
+                <div class="row">
+                  <div class="small-12 columns">
+                    {{input body as="text"}}
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="small-6 columns">
+                    {{submit 'Save' class='button success expand'}}
+                  </div>
+                  <div class="small-6 columns">
+                    <button class="button secondary expand "{{action 'cancel'}}>Cancel</button>
+                  </div>
+                </div>
+              {{/form-for}}
+            </div>
+          {{else}}
+            {{format-markdown body}}
+          {{/if}}
         </div>
       </div>
 
@@ -47,7 +49,5 @@
         {{render 'comments.new'}}
       {{/if}}
     </div>
-
-    <hr>
   {{/each}}
 </div>
