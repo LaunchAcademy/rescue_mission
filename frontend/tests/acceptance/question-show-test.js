@@ -62,9 +62,9 @@ test('question details are displayed', function() {
   andThen(function() {
     equal(find('.page-title:contains("really bad question")').length, 1,
       'Title found');
-    equal(find('.question__author:contains("HeroicEric")').length, 1,
+    equal(find('#question-1 .post__author:contains("HeroicEric")').length, 1,
       'Author found');
-    equal(find('.question__body:contains("I write the worst questions")').length, 1,
+    equal(find('#question-1 .post__content:contains("I write the worst questions")').length, 1,
       'Body found');
   });
 });
