@@ -30,9 +30,11 @@
     </div>
   </div>
 
-  {{render 'comments.list' model.comments}}
+  {{#if isCommentable}}
+    {{render 'comments.list' model.comments}}
 
-  {{#if isCommenting}}
-    {{render 'comments.new'}}
+    {{#if isCommenting}}
+      {{render 'comments.new'}}
+    {{/if}}
   {{/if}}
 </div>

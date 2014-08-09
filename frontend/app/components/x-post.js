@@ -15,6 +15,14 @@ export default Ember.Component.extend({
     return 'post--' + this.get('type');
   }.property('type'),
 
+  postAction: function() {
+    return this.get('type') + 'ed';
+  }.property(),
+
+  isCommentable: function() {
+    return this.get('type') !== 'comment';
+  }.property(),
+
   editPartial: function() {
     return this.get('type') + 's/edit';
   }.property(),
