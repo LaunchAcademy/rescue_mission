@@ -1,0 +1,38 @@
+<div {{bind-attr id=itemId}} class="post-wrapper">
+  <div class="post-avatar">
+    <a href="#"><img src="http://placekitten.com/g/48/48"></a>
+  </div>
+
+  <div {{bind-attr class=":post postClass"}}>
+    <div class="post__header">
+      <div class="post__header__text">
+        <span class="post__author">
+          <strong>@{{model.user.username}}</strong>
+        </span>
+        {{postAction}}
+      </div>
+      <div class="post__actions">
+        {{#if model.canEdit}}
+          <a class="post__action post__action--edit"
+            href="#" {{action 'edit'}}>
+            <i class="fa fa-pencil"></i>
+          </a>
+        {{/if}}
+      </div>
+    </div>
+
+    <div class="post__content">
+      {{#if isEditing}}
+        {{partial editPartial}}
+      {{else}}
+        {{format-markdown model.body}}
+      {{/if}}
+    </div>
+  </div>
+
+  {{render 'comments.list' model.comments}}
+
+  {{#if isCommenting}}
+    {{render 'comments.new'}}
+  {{/if}}
+</div>

@@ -1,18 +1,23 @@
 import Ember from 'ember';
 
-export default Ember.ObjectController.extend(Ember.Validations.Mixin, {
+export default Ember.Component.extend({
   isCommenting: false,
   isEditing: false,
+  type: null,
 
   itemId: function() {
-    return 'answer-' + this.get('id');
-  }.property('id'),
+    var type = this.get('type');
+    var id = this.get('model.id');
+    return type + '-' + id;
+  }.property('model.id', 'type'),
 
-  validations: {
-    body: {
-      length: { minimum: 30, maximum: 10000 }
-    }
-  },
+  postClass: function() {
+    return 'post--' + this.get('type');
+  }.property('type'),
+
+  editPartial: function() {
+    return this.get('type') + 's/edit';
+  }.property(),
 
   actions: {
     edit: function() {
@@ -25,10 +30,10 @@ export default Ember.ObjectController.extend(Ember.Validations.Mixin, {
     },
 
     save: function() {
-      var answer = this.get('model');
+      var model = this.get('model');
       var _this = this;
 
-      answer.save().then(function() {
+      model.save().then(function() {
         _this.set('isEditing', false);
       }, function() {
         _this.wuphf.danger('Something went wrong. Please try again.', 3000);
