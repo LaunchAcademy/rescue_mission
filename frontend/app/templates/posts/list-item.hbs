@@ -28,4 +28,12 @@
       {{/if}}
     </div>
   </div>
+
+  {{#if isCommentable}}
+    {{render 'comments.list' comments}}
+
+    {{#if isCommenting}}
+      {{render 'comments.new'}}
+    {{/if}}
+  {{/if}}
 </div>

@@ -5,6 +5,7 @@ export default Ember.ObjectController.extend(
   Ember.Validations.Mixin,
   PostControllerMixin, {
 
+  isCommentable: false,
   postType: 'comment',
   postActionText: 'commented',
 

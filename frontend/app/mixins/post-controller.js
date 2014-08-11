@@ -1,7 +1,11 @@
 import Ember from 'ember';
 
 export default Ember.Mixin.create({
+  isCommentable: true,
+  isCommenting: false,
+
   isEditing: false,
+
   postActionText: null,
   postType: null,
 
@@ -18,13 +22,17 @@ export default Ember.Mixin.create({
   }.property('model.id', 'postType'),
 
   actions: {
-    edit: function() {
-      this.set('isEditing', true);
+    addComment: function() {
+      this.set('isCommenting', true);
     },
 
     cancel: function() {
       this.get('model').rollback();
       this.set('isEditing', false);
+    },
+
+    edit: function() {
+      this.set('isEditing', true);
     },
 
     save: function() {
