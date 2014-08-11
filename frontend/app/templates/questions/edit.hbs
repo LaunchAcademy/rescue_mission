@@ -1,0 +1,24 @@
+<div class="question-form">
+  {{#form-for controller action='save'}}
+    <div class="row">
+      <div class="small-12 columns">
+        {{input title placeholder="Deploying Rails app to Heroku"}}
+      </div>
+    </div>
+    <div class="row">
+      <div class="small-12 columns">
+        {{input body as='text' placeholder='Provide as many details as possible'}}
+      </div>
+    </div>
+    <div class="row">
+      <div class="small-6 columns">
+        {{submit "Save" class="button success expand"}}
+      </div>
+      <div class="small-6 columns">
+        <a href="#" class="button secondary expand" {{action 'cancel'}}>
+          Cancel
+        </a>
+      </div>
+    </div>
+  {{/form-for}}
+</div>

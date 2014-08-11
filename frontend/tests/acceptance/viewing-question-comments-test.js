@@ -43,7 +43,7 @@ test('all comments for question are displayed', function() {
   visit('/questions/1');
 
   andThen(function() {
-    equal(find('.question .post--comment').length, 2, 'Correct number of comments are listed');
+    equal(find('#question-1 .post--comment').length, 2, 'Correct number of comments are listed');
     equal(find('.post__content:contains("You should just rm -rf *. That should fix it.")').length, 1,
       'First comment found');
     equal(find('.post__content:contains("I actually solved this myself by derping the derp")').length, 1,

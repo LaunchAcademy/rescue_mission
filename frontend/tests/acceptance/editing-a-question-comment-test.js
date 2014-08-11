@@ -61,7 +61,7 @@ test('user successfully edits a question comment', function() {
 
   var initialCommentCount;
   andThen(function() {
-    initialCommentCount = find('.question .post--comment').length;
+    initialCommentCount = find('#question-1 .post--comment').length;
   });
 
   click('#comment-1 .post__action--edit');
@@ -71,7 +71,7 @@ test('user successfully edits a question comment', function() {
   andThen(function() {
     equal(find('#comment-1:contains(' + newBody +')').length, 1,
       'Comment was updated');
-    equal(find('.question .post--comment').length, initialCommentCount,
+    equal(find('#question-1 .post--comment').length, initialCommentCount,
       'No new comments were added to the list');
   });
 });
@@ -84,7 +84,7 @@ test('user cannot submit an invalid comment', function() {
   fillIn('#comment-1 textarea[name="body"]', '');
 
   andThen(function() {
-    equal(find('.question .comment-form input[type="submit"]').attr('disabled'), 'disabled',
+    equal(find('#question-1 .comment-form input[type="submit"]').attr('disabled'), 'disabled',
       'Comment submit button is disabled');
   });
 });
