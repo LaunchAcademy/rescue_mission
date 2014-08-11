@@ -56,7 +56,7 @@ test('user successfully comments on a question', function() {
 
   var initialCommentCount;
   andThen(function() {
-    initialCommentCount = find('.question .comment-list .comment').length;
+    initialCommentCount = find('.question .post--comment').length;
   });
 
   click('.question .add-comment');
@@ -65,7 +65,7 @@ test('user successfully comments on a question', function() {
   click('.question .comment-form input[type="submit"]');
 
   andThen(function() {
-    equal(find('.question .comment-list .comment').length,
+    equal(find('.question .post--comment').length,
       initialCommentCount + 1, 'Comment added to feed');
     ok(hasContent('Comment created succesfully!'),
       'Success message displayed');

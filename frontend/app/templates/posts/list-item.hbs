@@ -1,0 +1,31 @@
+<div {{bind-attr id=postId}} class="post-wrapper">
+  <div class="post-avatar">
+    <a href="#"><img src="http://placekitten.com/g/48/48"></a>
+  </div>
+
+  <div {{bind-attr class=":post postClass"}}>
+    <div class="post__header">
+      <div class="post__header__text">
+        <span class="post__author">
+          <strong>@{{user.username}}</strong>
+        </span>
+        {{postActionText}}
+      </div>
+      <div class="post__actions">
+        {{#if canEdit}}
+          <a class="post__action post__action--edit" href="#" {{action 'edit'}}>
+            <i class="fa fa-pencil"></i> Edit
+          </a>
+        {{/if}}
+      </div>
+    </div>
+
+    <div class="post__content">
+      {{#if isEditing}}
+        {{partial postEditPartial}}
+      {{else}}
+        {{format-markdown body}}
+      {{/if}}
+    </div>
+  </div>
+</div>

@@ -30,7 +30,7 @@ module('Acceptance: Editing a Question Comment', {
 
     server = new Pretender(function(){
       this.get('/api/v1/questions/1', function(request){
-        return [200, {"Content-Type": "application/json"}, JSON.stringify({question: question, comments: comments})];
+        return jsonResponse(200, { question: question, comments: comments });
       });
     });
   },
@@ -40,7 +40,7 @@ module('Acceptance: Editing a Question Comment', {
   }
 });
 
-test('user successfully comments on a question', function() {
+test('user successfully edits a question comment', function() {
   var newBody = 'This is the edited content for the comment body';
 
   // Successful response
@@ -61,7 +61,7 @@ test('user successfully comments on a question', function() {
 
   var initialCommentCount;
   andThen(function() {
-    initialCommentCount = find('.question .comment-list .comment').length;
+    initialCommentCount = find('.question .post--comment').length;
   });
 
   click('#comment-1 .post__action--edit');
@@ -71,7 +71,7 @@ test('user successfully comments on a question', function() {
   andThen(function() {
     equal(find('#comment-1:contains(' + newBody +')').length, 1,
       'Comment was updated');
-    equal(find('.question .comment-list .comment').length, initialCommentCount,
+    equal(find('.question .post--comment').length, initialCommentCount,
       'No new comments were added to the list');
   });
 });

@@ -1,48 +1,6 @@
 <div class="comment-list">
   {{#each}}
-    <div {{bind-attr id=itemId}} class="post-wrapper">
-      <div class="post-avatar">
-        <a href="#"><img src="http://placekitten.com/g/48/48"></a>
-      </div>
-
-      <div class="post comment">
-        <div class="post__header">
-          <div class="post__header__text">
-            <strong>@{{user.username}}</strong>
-            commented
-          </div>
-          <div class="post__actions">
-            {{#if canEdit}}
-              <a class="post__action--edit" href="#" {{action 'edit'}}><i class="fa fa-pencil"></i></a>
-            {{/if}}
-          </div>
-        </div>
-
-        <div class="post__content">
-          {{#if isEditing}}
-            <div class="comment-form">
-              {{#form-for controller action='save'}}
-                <div class="row">
-                  <div class="small-12 columns">
-                    {{input body as="text"}}
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="small-6 columns">
-                    {{submit "Save" class="button success expand"}}
-                  </div>
-                  <div class="small-6 columns">
-                    <button class="button secondary expand" {{action 'cancel'}}>Cancel</button>
-                  </div>
-                </div>
-              {{/form-for}}
-            </div>
-          {{else}}
-            {{format-markdown body}}
-          {{/if}}
-        </div>
-      </div>
-    </div>
+    {{partial 'posts/list-item'}}
   {{/each}}
 
   {{#if session.isAuthenticated}}
