@@ -3,7 +3,7 @@ import startApp from '../helpers/start-app';
 
 var App, server;
 
-var editButton = '.post-action--edit';
+var editButton = '#question-42 .post__action--edit';
 
 module('Acceptance: Editing a question', {
   setup: function() {
@@ -53,7 +53,7 @@ test('user successfully edits a question', function() {
   andThen(function() {
     equal(find('.page-title:contains("Awesome new title for the question")').length, 1,
       'Question title is updated');
-    equal(find('.question__body:contains("Awesome new body for the question")').length, 1,
+    equal(find('#question-42 .post__content:contains("Awesome new body for the question")').length, 1,
       'Question body is updated');
   });
 });

@@ -56,16 +56,16 @@ test('user successfully comments on a question', function() {
 
   var initialCommentCount;
   andThen(function() {
-    initialCommentCount = find('.question .comment-list .comment').length;
+    initialCommentCount = find('#question-1 .post--comment').length;
   });
 
-  click('.question .add-comment');
-  fillIn('.question .comment-form textarea[name="body"]',
+  click('#question-1 .add-comment');
+  fillIn('#question-1 .comment-form textarea[name="body"]',
     'Can you create a jsbin that recreates your issue?');
-  click('.question .comment-form input[type="submit"]');
+  click('#question-1 .comment-form input[type="submit"]');
 
   andThen(function() {
-    equal(find('.question .comment-list .comment').length,
+    equal(find('#question-1 .post--comment').length,
       initialCommentCount + 1, 'Comment added to feed');
     ok(hasContent('Comment created succesfully!'),
       'Success message displayed');
@@ -77,7 +77,7 @@ test('posting a comment requires authentication', function() {
   visit('/questions/1');
 
   andThen(function() {
-    equal(find('.question .add-comment').length, 0,
+    equal(find('#question-1 .add-comment').length, 0,
       'Question comment form is not displayed');
     equal(find('a:contains("Log in to post a comment")').length, 1,
       'Message to sign in to post comment displayed');
@@ -88,10 +88,10 @@ test('user cannot submit an invalid comment', function() {
   authenticateSession();
   visit('/questions/1');
 
-  click('.question .add-comment');
+  click('#question-1 .add-comment');
 
   andThen(function() {
-    equal(find('.question .comment-form input[type="submit"]').attr('disabled'), 'disabled',
+    equal(find('#question-1 .comment-form input[type="submit"]').first().attr('disabled'), 'disabled',
       'Comment submit button is disabled');
   });
 });
