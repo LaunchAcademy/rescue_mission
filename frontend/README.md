@@ -6,7 +6,6 @@ This README outlines the details of collaborating on this Ember application.
 
 * `git clone` this repository
 * `npm install`
-* `bower install`
 
 ## Running
 
