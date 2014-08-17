@@ -13,9 +13,13 @@ describe API::V1::QuestionsController do
 
       get :index
 
-      expect(json).to be_json_eq(
-        ActiveModel::ArraySerializer.new(ordered_questions, root: :questions)
+
+      serialized_questions = ActiveModel::ArraySerializer.new(ordered_questions,
+        root: :questions,
+        meta: { current_page: 1, total_pages: 1 }
       )
+
+      expect(json).to be_json_eq(serialized_questions)
     end
   end
 

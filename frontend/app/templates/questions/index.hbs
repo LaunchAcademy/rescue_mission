@@ -3,7 +3,24 @@
 {{link-to 'Ask a Question' 'questions.new' class='button'}}
 
 <ul class="question-list">
-{{#each question in model}}
-  <li class="question">{{link-to question.title 'questions.show' question.id}}</li>
-{{/each}}
+  {{#each question in model}}
+    <li class="question">{{link-to question.title 'questions.show' question.id}}</li>
+  {{/each}}
 </ul>
+
+<div class="row">
+  <div class="small-6 columns">
+    <button class="button secondary expand"
+      {{bind-attr disabled=previousPageUnavailable}}
+      {{action 'previousPage'}}>
+      <i class="fa fa-arrow-left"></i>
+    </button>
+  </div>
+  <div class="small-6 columns">
+    <button class="button secondary expand"
+      {{bind-attr disabled=nextPageUnavailable}}
+      {{action 'nextPage'}}>
+      <i class="fa fa-arrow-right"></i>
+    </button>
+  </div>
+</div>
