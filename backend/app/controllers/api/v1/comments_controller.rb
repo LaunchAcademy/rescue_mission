@@ -3,37 +3,37 @@ module API::V1
     before_action :ensure_valid_api_key!, only: [:create, :update]
 
     def index
-      @comments = Comment.order(created_at: :desc).limit(25)
-      @comments = @comments.where(id: params[:ids]) if params[:ids]
+      comments = Comment.order(created_at: :desc).limit(25)
+      comments = comments.where(id: params[:ids]) if params[:ids]
 
-      render json: @comments, include: [:user]
+      render json: comments, include: [:user]
     end
 
     def show
-      @comment = Comment.find(params[:id])
+      comment = Comment.find(params[:id])
 
-      render json: @comment
+      render json: comment
     end
 
     def create
-      @comment = current_user.comments.build(create_comment_params)
+      comment = current_user.comments.build(create_comment_params)
 
-      if @comment.save
-        render json: @comment,
+      if comment.save
+        render json: comment,
           status: :created,
-          location: [:api, :v1, @comment]
+          location: [:api, :v1, comment]
       else
-        render json: { errors: @comment.errors }, status: :unprocessable_entity
+        render json: { errors: comment.errors }, status: :unprocessable_entity
       end
     end
 
     def update
-      @comment = current_user.comments.find(params[:id])
+      comment = current_user.comments.find(params[:id])
 
-      if @comment.update(update_comment_params)
-        render json: @comment, status: :ok, location: [:api, :v1, @comment]
+      if comment.update(update_comment_params)
+        render json: comment, status: :ok, location: [:api, :v1, comment]
       else
-        render json: { errors: @comment.errors }, status: :unprocessable_entity
+        render json: { errors: comment.errors }, status: :unprocessable_entity
       end
     end
 

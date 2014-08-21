@@ -3,37 +3,37 @@ module API::V1
     before_action :ensure_valid_api_key!, only: [:create, :update]
 
     def index
-      @answers = Answer.includes(:user, :question).order(created_at: :desc).limit(25)
-      @answers = @answers.where(id: params[:ids]) if params[:ids]
+      answers = Answer.includes(:user, :question).order(created_at: :desc).limit(25)
+      answers = answers.where(id: params[:ids]) if params[:ids]
 
-      render json: @answers, include: [:user]
+      render json: answers, include: [:user]
     end
 
     def show
-      @answer = Answer.includes(:user, :question).find(params[:id])
+      answer = Answer.includes(:user, :question).find(params[:id])
 
-      render json: @answer, include: [:user, :question]
+      render json: answer, include: [:user, :question]
     end
 
     def create
-      @answer = current_user.answers.build(create_answer_params)
+      answer = current_user.answers.build(create_answer_params)
 
-      if @answer.save
-        render json: @answer,
+      if answer.save
+        render json: answer,
           status: :created,
-          location: [:api, :v1, @answer]
+          location: [:api, :v1, answer]
       else
-        render json: { errors: @answer.errors }, status: :unprocessable_entity
+        render json: { errors: answer.errors }, status: :unprocessable_entity
       end
     end
 
     def update
-      @answer = current_user.answers.find(params[:id])
+      answer = current_user.answers.find(params[:id])
 
-      if @answer.update(update_answer_params)
-        render json: @answer, status: :ok, location: [:api, :v1, @answer]
+      if answer.update(update_answer_params)
+        render json: answer, status: :ok, location: [:api, :v1, answer]
       else
-        render json: { errors: @answer.errors }, status: :unprocessable_entity
+        render json: { errors: answer.errors }, status: :unprocessable_entity
       end
     end
 
