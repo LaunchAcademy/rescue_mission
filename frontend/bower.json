@@ -5,7 +5,7 @@
     "jquery": "^1.11.1",
     "qunit": "~1.12.0",
     "ember-qunit": "~0.1.8",
-    "ember": "1.6.1",
+    "ember": "components/ember#beta",
     "ember-resolver": "~0.1.5",
     "loader": "stefanpenner/loader.js#1.0.0",
     "ember-cli-shims": "stefanpenner/ember-cli-shims#0.0.2",
@@ -18,5 +18,8 @@
     "ember-validations": "http://builds.dockyard.com.s3.amazonaws.com/ember-validations/latest/ember-validations.js",
     "ember-easyForm": "http://builds.dockyard.com.s3.amazonaws.com/ember-easyForm/latest/ember-easyForm.js",
     "marked": "~0.3.2"
+  },
+  "resolutions": {
+    "ember": "beta"
   }
 }

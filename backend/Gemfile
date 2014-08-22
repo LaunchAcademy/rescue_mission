@@ -5,6 +5,7 @@ gem 'rails-api'
 gem 'pg'
 
 gem 'active_model_serializers'
+gem 'kaminari'
 gem 'octokit'
 gem 'rack-cors', require: 'rack/cors'
 
