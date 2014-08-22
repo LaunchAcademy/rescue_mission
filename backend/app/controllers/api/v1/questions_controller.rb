@@ -16,30 +16,30 @@ module API::V1
     end
 
     def show
-      @question = Question.includes(:user, :comments, answers: :user).find(params[:id])
+      question = Question.includes(:user, :comments, answers: :user).find(params[:id])
 
-      render json: @question, include: [:answers, :comments, :user]
+      render json: question, include: [:answers, :comments, :user]
     end
 
     def create
-      @question = current_user.questions.build(question_params)
+      question = current_user.questions.build(question_params)
 
-      if @question.save
-        render json: @question,
+      if question.save
+        render json: question,
           status: :created,
-          location: [:api, :v1, @question]
+          location: [:api, :v1, question]
       else
-        render json: { errors: @question.errors }, status: :unprocessable_entity
+        render json: { errors: question.errors }, status: :unprocessable_entity
       end
     end
 
     def update
-      @question = current_user.questions.find(params[:id])
+      question = current_user.questions.find(params[:id])
 
-      if @question.update(question_params)
-        render json: @question, status: :ok, location: [:api, :v1, @question]
+      if question.update(question_params)
+        render json: question, status: :ok, location: [:api, :v1, question]
       else
-        render json: { errors: @question.errors }, status: :unprocessable_entity
+        render json: { errors: question.errors }, status: :unprocessable_entity
       end
     end
 
