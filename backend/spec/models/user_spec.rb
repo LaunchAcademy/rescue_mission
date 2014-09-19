@@ -14,11 +14,24 @@ describe User do
 
     it { should validate_presence_of(:provider) }
 
+    it { should validate_presence_of(:role) }
+    it { should ensure_inclusion_of(:role).in_array(%w(member admin)) }
+
     it { should validate_presence_of(:uid) }
     it { should validate_uniqueness_of(:uid).scoped_to(:provider) }
 
     it { should validate_presence_of(:username) }
     it { should validate_uniqueness_of(:username) }
+  end
+
+  describe "#admin?" do
+    it "returns true if role is admin" do
+      expect(User.new(role: 'admin')).to be_admin
+    end
+
+    it "returns false if role is not admin" do
+      expect(User.new(role: 'derp')).to_not be_admin
+    end
   end
 
   describe ".find_or_create_from_oauth!" do
