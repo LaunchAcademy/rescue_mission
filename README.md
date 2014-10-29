@@ -4,10 +4,6 @@
 
 ### Backend
 
-Before you get started, make sure you have [Node.js](node) and [Bower](bower)
-installed. I'd recommend using [nvm](nvm) to install and manage different
-versions of Node.js.
-
 ```no-highlight
 # Move into the backend directory
 cd backend
@@ -22,6 +18,10 @@ rake db:setup
 Create a `backend/.env` file and fill in your GitHub application credentials. You can find an example at `backend/.env.example`.
 
 ### Frontend
+
+Before you get started, make sure you have [Node.js](node) and [Bower](bower)
+installed. I'd recommend using [nvm](nvm) to install and manage different
+versions of Node.js.
 
 ```no-highlight
 # Move into the frontend directory
