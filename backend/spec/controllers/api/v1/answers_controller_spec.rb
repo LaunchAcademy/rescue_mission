@@ -92,53 +92,32 @@ describe API::V1::AnswersController do
         mock_authentication_with(api_key)
       end
 
-      context "when answer belongs to current user" do
-        context "with valid attributes" do
-          it "updates the answer" do
-            answer = FactoryGirl.create(:answer,
-              user: current_user,
-              body: "What's the name of the best band ever? I really like the Beatles but I'm not sure.")
-
-            expect {
-              put :update, id: answer.id,
-                answer: { body: "Just kidding, I'm not a troll. It's Mr. Vanilla Ice" }
-            }.to_not change{ Answer.count }
-
-            answer.reload
-            expect(response.status).to eq 200
-            expect(json).to be_json_eq AnswerSerializer.new(answer, scope: current_user)
-            expect(answer.body).to eq "Just kidding, I'm not a troll. It's Mr. Vanilla Ice"
-          end
-        end
-
-        context "with invalid attributes" do
-          it "is not successful" do
-            answer = FactoryGirl.create(:answer, user: current_user)
-
-            put :update, id: answer.id, answer: { body: '' }
-
-            expect(response.status).to eq 422
-          end
-        end
-      end
-
-      context "when answer belongs to another user" do
-        it "doesn't update the answer" do
-          answer = FactoryGirl.create(:answer)
+      context "with valid attributes" do
+        it "updates the answer" do
+          answer = FactoryGirl.create(:answer,
+            user: current_user,
+            body: "What's the name of the best band ever? I really like the Beatles but I'm not sure.")
 
           expect {
             put :update, id: answer.id,
-              answer: { body: "Doesn't really matter but I'll provide one" }
-          }.to raise_error ActiveRecord::RecordNotFound
+              answer: { body: "Just kidding, I'm not a troll. It's Mr. Vanilla Ice" }
+          }.to_not change{ Answer.count }
+
+          answer.reload
+          expect(response.status).to eq 200
+          expect(json).to be_json_eq AnswerSerializer.new(answer, scope: current_user)
+          expect(answer.body).to eq "Just kidding, I'm not a troll. It's Mr. Vanilla Ice"
         end
       end
-    end
 
-    context "without valid access token" do
-      it "is unauthorized" do
-        put :update, id: 'anything'
+      context "with invalid attributes" do
+        it "is not successful" do
+          answer = FactoryGirl.create(:answer, user: current_user)
 
-        expect(response.status).to eq 401
+          put :update, id: answer.id, answer: { body: '' }
+
+          expect(response.status).to eq 422
+        end
       end
     end
   end

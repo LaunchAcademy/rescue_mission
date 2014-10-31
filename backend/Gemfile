@@ -8,6 +8,7 @@ gem 'active_model_serializers'
 gem 'gravatar-ultimate'
 gem 'kaminari'
 gem 'octokit'
+gem 'pundit'
 gem 'rack-cors', require: 'rack/cors'
 
 group :development do
@@ -15,7 +16,6 @@ group :development do
 end
 
 group :test do
-  gem 'rspec-rails', '~> 3.0.0'
   gem 'shoulda-matchers', require: false
 end
 
@@ -24,4 +24,5 @@ group :development, :test do
   gem 'factory_girl_rails'
   gem 'faker'
   gem 'pry-rails'
+  gem 'rspec-rails', '~> 3.0.0'
 end

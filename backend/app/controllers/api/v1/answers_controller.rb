@@ -1,6 +1,7 @@
 module API::V1
   class AnswersController < ApplicationController
     before_action :ensure_valid_api_key!, only: [:create, :update]
+    after_action :verify_authorized, except: :index
 
     def index
       answers = Answer.includes(:user, :question).order(created_at: :desc).limit(25)
@@ -12,11 +13,15 @@ module API::V1
     def show
       answer = Answer.includes(:user, :question).find(params[:id])
 
+      authorize answer
+
       render json: answer, include: [:user, :question]
     end
 
     def create
       answer = current_user.answers.build(create_answer_params)
+
+      authorize answer
 
       if answer.save
         render json: answer,
@@ -28,7 +33,9 @@ module API::V1
     end
 
     def update
-      answer = current_user.answers.find(params[:id])
+      answer = Answer.find(params[:id])
+
+      authorize answer
 
       if answer.update(update_answer_params)
         render json: answer, status: :ok, location: [:api, :v1, answer]
