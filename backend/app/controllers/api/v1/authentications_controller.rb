@@ -1,5 +1,7 @@
 module API::V1
   class AuthenticationsController < ApplicationController
+    skip_after_action :verify_authorized, only: [:create]
+
     def create
       authentication = Authentication.new(params)
 

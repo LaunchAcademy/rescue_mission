@@ -1,7 +1,6 @@
 module API::V1
   class CommentsController < ApplicationController
     before_action :ensure_valid_api_key!, only: [:create, :update]
-    after_action :verify_authorized, except: :index
 
     def index
       comments = Comment.order(created_at: :desc).limit(25)
