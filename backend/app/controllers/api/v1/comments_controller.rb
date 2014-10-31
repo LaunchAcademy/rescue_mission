@@ -1,6 +1,7 @@
 module API::V1
   class CommentsController < ApplicationController
     before_action :ensure_valid_api_key!, only: [:create, :update]
+    after_action :verify_authorized, except: :index
 
     def index
       comments = Comment.order(created_at: :desc).limit(25)
@@ -12,11 +13,15 @@ module API::V1
     def show
       comment = Comment.find(params[:id])
 
+      authorize comment
+
       render json: comment
     end
 
     def create
       comment = current_user.comments.build(create_comment_params)
+
+      authorize comment
 
       if comment.save
         render json: comment,
@@ -28,7 +33,9 @@ module API::V1
     end
 
     def update
-      comment = current_user.comments.find(params[:id])
+      comment = Comment.find(params[:id])
+
+      authorize comment
 
       if comment.update(update_comment_params)
         render json: comment, status: :ok, location: [:api, :v1, comment]
