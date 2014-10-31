@@ -6,8 +6,13 @@ class User < ActiveRecord::Base
 
   validates :email, presence: true, uniqueness: true
   validates :provider, presence: true
+  validates :role, presence: true, inclusion: { in: %w(member admin) }
   validates :uid, presence: true, uniqueness: { scope: :provider }
   validates :username, presence: true, uniqueness: true
+
+  def admin?
+    role == 'admin'
+  end
 
   def self.find_or_create_from_oauth!(oauth)
     find_by(uid: oauth.uid, provider: oauth.provider) || create_from_oauth!(oauth)
