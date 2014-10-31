@@ -18,11 +18,15 @@ module API::V1
     def show
       question = Question.includes(:user, :comments, answers: :user).find(params[:id])
 
+      authorize question
+
       render json: question, include: [:answers, :comments, :user]
     end
 
     def create
       question = current_user.questions.build(question_params)
+
+      authorize question
 
       if question.save
         render json: question,
@@ -34,7 +38,9 @@ module API::V1
     end
 
     def update
-      question = current_user.questions.find(params[:id])
+      question = Question.find(params[:id])
+
+      authorize question
 
       if question.update(question_params)
         render json: question, status: :ok, location: [:api, :v1, question]

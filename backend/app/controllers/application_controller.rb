@@ -1,4 +1,10 @@
 class ApplicationController < ActionController::API
+  include Pundit
+
+  rescue_from Pundit::NotAuthorizedError, with: :render_unauthorized
+
+  after_action :verify_authorized, except: :index
+
   protected
   def ensure_valid_api_key!
     api_key || render_unauthorized
