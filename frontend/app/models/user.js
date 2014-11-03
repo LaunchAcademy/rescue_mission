@@ -6,7 +6,10 @@ export default DS.Model.extend({
     async: true,
     inverse: 'assignee'
   }),
-  questions: DS.hasMany('question', { async: true }),
+  questions: DS.hasMany('question', {
+    async: true,
+    inverse: 'user'
+  }),
 
   avatarUrl: DS.attr('string'),
   username: DS.attr('string')
