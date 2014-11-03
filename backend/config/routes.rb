@@ -5,7 +5,7 @@ Rails.application.routes.draw do
       resources :authentications, only: [:create]
       resources :comments, only: [:index, :show, :create, :update]
       resources :questions, only: [:index, :show, :create, :update]
-      resources :users, only: [:show]
+      resources :users, only: [:index, :show]
     end
   end
 end

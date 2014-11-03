@@ -2,7 +2,8 @@ require 'rails_helper'
 
 describe Question do
   describe "associations" do
-    it { should belong_to :user }
+    it { should belong_to(:assignee).class_name("User") }
+    it { should belong_to(:user) }
     it { should have_many(:answers).dependent(:destroy) }
     it { should have_many(:comments).dependent(:destroy) }
   end

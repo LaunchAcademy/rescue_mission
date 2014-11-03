@@ -1,0 +1,19 @@
+<div class="select-menu">
+  <p>
+    <a href="#" {{action 'toggleIsActive'}}>
+      {{yield}}
+    </a>
+  </p>
+
+  <div {{bind-attr class=":select-menu-modal isActive:select-menu-modal--open"}}>
+    <ul class="select-menu-list">
+    {{#each user in users}}
+      <li>
+        <a {{action 'select' user}} href="#">
+          {{user-avatar user=user size=24}} {{user.username}}
+        </a>
+      </li>
+    {{/each}}
+    </ul>
+  </div>
+</div>

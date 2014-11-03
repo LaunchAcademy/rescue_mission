@@ -52,7 +52,7 @@ module API::V1
     private
 
     def question_params
-      params.require(:question).permit(:body, :title)
+      params.require(:question).permit(*policy(Question).permitted_attributes)
     end
   end
 end

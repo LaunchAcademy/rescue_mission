@@ -12,8 +12,16 @@ export default Ember.ObjectController.extend(
     body: {
       length: { minimum: 30, maximum: 10000 }
     },
+
     title: {
       length: { minimum: 15, maximum: 150 }
+    }
+  },
+
+  actions: {
+    assignUser: function(user) {
+      this.set('assignee', user);
+      this.send('save');
     }
   }
 });
