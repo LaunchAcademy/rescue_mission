@@ -16,13 +16,13 @@ module.exports = function(environment) {
     APP: {
       // Here you can pass flags/options to your application instance
       // when it is created
-    }
-  };
+    },
 
-  ENV.torii = {
-    providers: {
-      'github-oauth2': {
-        scope: 'user:email'
+    torii: {
+      providers: {
+        'github-oauth2': {
+          scope: 'user:email'
+        }
       }
     }
   };
