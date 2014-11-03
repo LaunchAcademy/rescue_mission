@@ -32,6 +32,9 @@ npm install
 
 # Install Bower dependencies
 bower install
+
+# Symlink Foundation files into app/styles
+ember g foundation-link
 ```
 
 ### Running the App

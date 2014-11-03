@@ -13,11 +13,14 @@
     "ember-qunit": "0.1.8",
     "ember-qunit-notifications": "0.0.4",
     "qunit": "~1.15.0",
-    "foundation": "~5.3.1",
     "ember-simple-auth": "0.7.0",
+    "foundation": "5.4.2",
     "ember-validations": "http://builds.dockyard.com.s3.amazonaws.com/ember-validations/latest/ember-validations.js",
     "ember-easyForm": "http://builds.dockyard.com.s3.amazonaws.com/ember-easyForm/latest/ember-easyForm.js",
     "marked": "~0.3.2",
     "pretender": "0.1.0"
+  },
+  "resolutions": {
+    "jquery": ">= 2.1.0"
   }
 }
