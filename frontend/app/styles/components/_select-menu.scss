@@ -1,0 +1,27 @@
+$select-menu-border-color: #E3E3E3;
+$select-menu-bg-color: #FFFFFF;
+$select-menu-bg-color-hover: scale-color($select-menu-bg-color, $lightness: -10%);
+
+.select-menu-modal {
+  display: none;
+  border: 1px solid $select-menu-border-color;
+}
+
+.select-menu-modal--open {
+  display: block;
+}
+
+.select-menu-list {
+  list-style-type: none;
+  margin: 0;
+
+  > li > a {
+    display: block;
+    padding: 5px 10px;
+    border-top: 1px solid $select-menu-border-color;
+
+    &:hover {
+      background-color: $select-menu-bg-color-hover;
+    }
+  }
+}
