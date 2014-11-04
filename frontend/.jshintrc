@@ -1,11 +1,10 @@
 {
-  "predef": {
-    "document": true,
-    "window": true,
-    "-Promise": true,
-    "RescueMissionENV": true,
-    "marked": true
-  },
+  "predef": [
+    "document",
+    "window",
+    "-Promise",
+    "marked"
+  ],
   "browser" : true,
   "boss" : true,
   "curly": true,

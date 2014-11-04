@@ -7,7 +7,8 @@
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    {{BASE_TAG}}
+    {{content-for 'head'}}
+    {{content-for 'test-head'}}
 
     <link rel="stylesheet" href="assets/vendor.css">
     <link rel="stylesheet" href="assets/rescue-mission.css">
@@ -33,18 +34,12 @@
     <div id="qunit"></div>
     <div id="qunit-fixture"></div>
 
-    <script>
-      window.RescueMissionENV = {{ENV}};
-      window.ENV = window.RescueMissionENV;
-      window.EmberENV = window.RescueMissionENV.EmberENV;
-    </script>
+    {{content-for 'body'}}
+    {{content-for 'test-body'}}
     <script src="assets/vendor.js"></script>
     <script src="assets/test-support.js"></script>
     <script src="assets/rescue-mission.js"></script>
     <script src="testem.js"></script>
-    <script>
-      require('rescue-mission/tests/test-helper');
-    </script>
     <script src="assets/test-loader.js"></script>
   </body>
 </html>

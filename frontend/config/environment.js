@@ -2,6 +2,7 @@
 
 module.exports = function(environment) {
   var ENV = {
+    modulePrefix: 'rescue-mission',
     environment: environment,
     baseURL: '/',
     locationType: 'auto',
@@ -15,13 +16,13 @@ module.exports = function(environment) {
     APP: {
       // Here you can pass flags/options to your application instance
       // when it is created
-    }
-  };
+    },
 
-  ENV.torii = {
-    providers: {
-      'github-oauth2': {
-        scope: 'user:email'
+    torii: {
+      providers: {
+        'github-oauth2': {
+          scope: 'user:email'
+        }
       }
     }
   };
@@ -47,9 +48,23 @@ module.exports = function(environment) {
   }
 
   if (environment === 'test') {
+    // Testem prefers this...
+    ENV.baseURL = '/';
+    ENV.locationType = 'auto';
+
+    // keep test console output quieter
+    ENV.APP.LOG_ACTIVE_GENERATION = false;
+    ENV.APP.LOG_VIEW_LOOKUPS = false;
+
+    ENV.APP.rootElement = '#ember-testing';
+
+    ENV['simple-auth'] = {
+      store: 'simple-auth-session-store:ephemeral'
+    }
   }
 
   if (environment === 'production') {
+
   }
 
   return ENV;
