@@ -10,6 +10,12 @@ class CommentSerializer < ActiveModel::Serializer
   has_one :user
 
   def can_edit
-    object.user == scope
+    policy.edit?
+  end
+
+  private
+
+  def policy
+    Pundit.policy!(scope, object)
   end
 end
