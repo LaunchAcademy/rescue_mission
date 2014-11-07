@@ -6,6 +6,6 @@ class UserSerializer < ActiveModel::Serializer
   has_many :questions
 
   def avatar_url
-    Gravatar.new(object.email).image_url
+    Gravatar.new(object.email).image_url(ssl: true)
   end
 end
