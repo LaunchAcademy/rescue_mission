@@ -1,4 +1,4 @@
-class CreateApiKeys < ActiveRecord::Migration
+class CreateAPIKeys < ActiveRecord::Migration
   def change
     create_table :api_keys do |t|
       t.integer :user_id, null: false
