@@ -27,6 +27,15 @@ module RescueMission
     # config.i18n.load_path += Dir[Rails.root.join('my', 'locales', '*.{rb,yml}').to_s]
     # config.i18n.default_locale = :de
 
+    # Send all requests to index that are not to the api
+    config.middleware.insert_before(Rack::Runtime, Rack::Rewrite) do
+      index_file = Rails.root.join('public', 'index.html').to_s
+
+      send_file(/.*/, index_file, if: ->(rack_env) {
+        rack_env['PATH_INFO'] !~ /^\/api.*$/
+      })
+    end
+
     if Rails.env.development?
       config.middleware.insert_before ActionDispatch::Static, Rack::Cors do
         allow do

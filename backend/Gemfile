@@ -9,6 +9,7 @@ gem 'gravatar-ultimate'
 gem 'kaminari'
 gem 'octokit'
 gem 'pundit'
+gem 'rack-rewrite'
 gem 'unicorn'
 
 group :production do
