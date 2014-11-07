@@ -27,14 +27,16 @@ module RescueMission
     # config.i18n.load_path += Dir[Rails.root.join('my', 'locales', '*.{rb,yml}').to_s]
     # config.i18n.default_locale = :de
 
-    config.middleware.insert_before ActionDispatch::Static, Rack::Cors do
-      allow do
-        origins 'http://localhost:4200'
+    if Rails.env.development?
+      config.middleware.insert_before ActionDispatch::Static, Rack::Cors do
+        allow do
+          origins 'http://localhost:4200'
 
-        resource '*',
-          headers: :any,
-          methods: [:get, :post, :delete, :put, :options],
-          max_age: 0
+          resource '*',
+            headers: :any,
+            methods: [:get, :post, :delete, :put, :options],
+            max_age: 0
+        end
       end
     end
   end
