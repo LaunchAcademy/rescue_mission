@@ -64,7 +64,16 @@ module.exports = function(environment) {
   }
 
   if (environment === 'production') {
+    ENV.host = 'https://rescue-mission.launchacademy.com';
+    ENV.torii.providers['github-oauth2'].apiKey = '1cf01a0807b2e1f7d2b5';
 
+    ENV['simple-auth'] = {
+      authorizer: 'simple-auth-authorizer:oauth2-bearer'
+    };
+
+    ENV['simple-auth-oauth2'] = {
+      serverTokenEndpoint: ENV.host + '/api/v1/authentications'
+    };
   }
 
   return ENV;
