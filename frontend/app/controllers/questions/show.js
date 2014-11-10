@@ -22,6 +22,11 @@ export default Ember.ObjectController.extend(
     assignUser: function(user) {
       this.set('assignee', user);
       this.send('save');
+    },
+
+    acceptAnswer: function(answer) {
+      this.set('acceptedAnswer', answer);
+      this.send('save');
     }
   }
 });

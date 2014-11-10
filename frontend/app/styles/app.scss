@@ -6,14 +6,31 @@
 @import 'components/post';
 @import 'components/select-menu';
 
+pre code {
+  display: block;
+}
+
+.accept-answer {
+  position: absolute;
+  top: 48px;
+  left: 0;
+  width: 48px;
+  text-align: center;
+  font-size: 48px;
+
+  a {
+    color: #ccc;
+
+    &:hover, &.is-accepted {
+      color: green;
+    }
+  }
+}
+
 .wuphf-message {
   @extend .alert-box;
 
   &.danger {
     @extend .alert;
   }
-}
-
-pre code {
-  display: block;
 }

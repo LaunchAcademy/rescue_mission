@@ -3,15 +3,21 @@ class QuestionSerializer < ActiveModel::Serializer
 
   attributes :id,
     :body,
+    :can_accept_answer,
     :can_assign,
     :can_edit,
     :title
 
+  has_one :accepted_answer
   has_one :assignee
   has_one :user
 
   has_many :answers
   has_many :comments
+
+  def can_accept_answer
+    policy.accept_answer?
+  end
 
   def can_assign
     policy.assign?
