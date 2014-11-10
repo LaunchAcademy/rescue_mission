@@ -56,20 +56,54 @@ describe QuestionPolicy do
     end
   end
 
+  permissions :accept_answer? do
+    it "is not permitted as a visitor" do
+      expect(subject).to_not permit(nil, Question.new)
+    end
+
+    it "is not permitted as a user" do
+      user = User.new
+      expect(subject).to_not permit(user, Question.new)
+    end
+
+    it "is permitted as the user who asked the question" do
+      user = User.new(role: 'admin')
+      expect(subject).to permit(user, Question.new(user: user))
+    end
+
+    it "is permitted as an admin" do
+      user = User.new(role: 'admin')
+      expect(subject).to permit(user, Question.new)
+    end
+  end
+
   describe "#permitted_attributes" do
-    subject { QuestionPolicy.new(user, Question.new) }
+    subject { QuestionPolicy.new(user, question) }
 
     context "as a user" do
       let(:user) { User.new }
+      let(:question) { Question.new }
 
       it { should permit_attributes(:body, :title) }
-      it { should_not permit_attributes(:assignee_id) }
+      it { should forbid_attributes(:accepted_answer_id, :assignee_id) }
+    end
+
+    context "as the user who created the question" do
+      let(:user) { User.new }
+      let(:question) { Question.new(user: user) }
+
+      it { should permit_attributes(:body, :title, :accepted_answer_id) }
+      it { should forbid_attributes(:assignee_id) }
     end
 
     context "as an admin" do
       let(:user) { User.new(role: 'admin') }
+      let(:question) { Question.new }
+      let(:permitted_attributes) do
+        [:body, :title, :accepted_answer_id, :assignee_id]
+      end
 
-      it { should permit_attributes(:body, :title, :assignee_id) }
+      it { should permit_attributes(*permitted_attributes) }
     end
   end
 end
