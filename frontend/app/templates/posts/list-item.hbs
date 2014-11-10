@@ -3,6 +3,14 @@
     <a href="#">{{user-avatar user=user}}</a>
   </div>
 
+  {{#if canBeAccepted}}
+    <div class="accept-answer">
+      <a {{action 'acceptAnswer' this}} {{bind-attr class="isAccepted"}} href="#">
+        <i class="fa fa-check-circle-o fa-6"></i>
+      </a>
+    </div>
+  {{/if}}
+
   <div {{bind-attr class=":post postClass"}}>
     <div class="post__header">
       <div class="post__header__text">

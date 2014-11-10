@@ -12,5 +12,9 @@ export default Ember.ObjectController.extend(
     body: {
       length: { minimum: 30, maximum: 10000 }
     }
-  }
+  },
+
+  canBeAccepted: function() {
+    return this.get('question.canAcceptAnswer');
+  }.property('question.canAcceptAnswer')
 });
