@@ -10,6 +10,8 @@ describe User do
   end
 
   describe "validations" do
+    subject { FactoryGirl.build(:user) }
+
     it { should validate_presence_of(:email) }
     it { should validate_uniqueness_of(:email) }
 

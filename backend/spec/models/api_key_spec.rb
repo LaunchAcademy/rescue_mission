@@ -1,4 +1,3 @@
-
 require 'rails_helper'
 
 describe APIKey do
@@ -9,6 +8,8 @@ describe APIKey do
   end
 
   describe "validations" do
+    subject { FactoryGirl.build(:api_key, expires_at: Time.now) }
+
     it { should validate_presence_of :user }
     it { should validate_uniqueness_of :access_token }
   end
