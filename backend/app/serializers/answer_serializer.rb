@@ -1,7 +1,7 @@
 class AnswerSerializer < ActiveModel::Serializer
   embed :ids
 
-  attributes :id, :body, :can_edit
+  attributes :id, :body, :can_edit, :is_accepted
 
   has_one :user
   has_one :question
@@ -10,6 +10,10 @@ class AnswerSerializer < ActiveModel::Serializer
 
   def can_edit
     policy.edit?
+  end
+
+  def is_accepted
+    object.question.accepted_answer == object
   end
 
   private

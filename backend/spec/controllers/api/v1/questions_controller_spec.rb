@@ -93,8 +93,10 @@ describe API::V1::QuestionsController do
           }.to_not change{Question.count}
 
           question.reload
+          serialized_question = QuestionSerializer.new(question, scope: current_user, include: [:answers])
+
           expect(response.status).to eq 200
-          expect(json).to be_json_eq QuestionSerializer.new(question, scope: current_user)
+          expect(json).to be_json_eq serialized_question
           expect(question.title).to eq "Just kidding, I'm not a troll"
         end
       end

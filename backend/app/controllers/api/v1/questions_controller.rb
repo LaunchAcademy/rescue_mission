@@ -43,7 +43,7 @@ module API::V1
       authorize question
 
       if question.update(question_params)
-        render json: question, status: :ok, location: [:api, :v1, question]
+        render json: question, include: [:answers], status: :ok, location: [:api, :v1, question]
       else
         render json: { errors: question.errors }, status: :unprocessable_entity
       end

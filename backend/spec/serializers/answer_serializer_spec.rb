@@ -20,4 +20,25 @@ describe AnswerSerializer do
       expect(serializer.can_edit).to eq false
     end
   end
+
+  describe "#is_accepted" do
+    it "is accepted when the its question's accepted answer" do
+      question = Question.new
+      answer = question.answers.build
+      question.accepted_answer = answer
+
+      serializer = AnswerSerializer.new(answer)
+
+      expect(serializer.is_accepted).to be true
+    end
+
+    it "is not accepted when the it is not its question's accepted answer" do
+      question = Question.new
+      answer = question.answers.build
+
+      serializer = AnswerSerializer.new(answer)
+
+      expect(serializer.is_accepted).to be false
+    end
+  end
 end
