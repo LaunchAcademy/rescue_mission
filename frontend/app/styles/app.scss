@@ -6,6 +6,10 @@
 @import 'components/post';
 @import 'components/select-menu';
 
+table {
+  width: 100%;
+}
+
 pre code {
   display: block;
 }

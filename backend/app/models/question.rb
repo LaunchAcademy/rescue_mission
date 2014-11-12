@@ -1,4 +1,6 @@
 class Question < ActiveRecord::Base
+  enum status: %w(open answered)
+
   belongs_to :accepted_answer, class_name: "Answer"
   belongs_to :assignee, class_name: "User"
   belongs_to :user
@@ -8,6 +10,7 @@ class Question < ActiveRecord::Base
 
   validate :accepted_answer_belongs_to_question, if: :accepted_answer
   validates :body, length: { in: 30..10000 }
+  validates :status, presence: true
   validates :title, length: { in: 15..150 }
   validates :user, presence: true
 

@@ -19,5 +19,10 @@ export default Commentable.extend({
   canAcceptAnswer: DS.attr('boolean', { defaultValue: false }),
   canAssign: DS.attr('boolean', { defaultValue: false }),
   canEdit: DS.attr('boolean', { defaultValue: false }),
+  status: DS.attr('string'),
   title: DS.attr('string'),
+
+  isAnswered: function() {
+    return this.get('status') === 'answered';
+  }.property('status')
 });

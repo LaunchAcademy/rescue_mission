@@ -8,6 +8,9 @@
 
     <section class="top-bar-section">
       <ul class="right">
+        <li class="has-form">
+          {{link-to 'Ask a Question' 'questions.new' class='button'}}
+        </li>
         <li>{{link-to 'Questions' 'questions.index'}}</li>
         {{#if session.isAuthenticated}}
           <li><a href="#">{{session.currentUser.username}}</a></li>
