@@ -1,6 +1,16 @@
 <h1 class="page-title">Questions</h1>
 
-{{link-to 'Ask a Question' 'questions.new' class='button'}}
+<dl class="sub-nav">
+  <dt>Filter:</dt>
+
+  {{#link-to 'questions.index' (query-params status='null') tagName='dd'}}
+    <a {{bind-attr href="view.href"}}>Newest</a>
+  {{/link-to}}
+
+  {{#link-to 'questions.index' (query-params status='open') tagName='dd'}}
+    <a {{bind-attr href="view.href"}}>Unanswered</a>
+  {{/link-to}}
+</dl>
 
 <table>
   <thead>

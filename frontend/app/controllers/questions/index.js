@@ -1,8 +1,9 @@
 import Ember from 'ember';
 
 export default Ember.ArrayController.extend({
-  queryParams: ['page'],
+  queryParams: ['page', 'status'],
   page: 1,
+  status: null,
 
   previousPageUnavailable: function() {
     return this.get('page') <= 1;

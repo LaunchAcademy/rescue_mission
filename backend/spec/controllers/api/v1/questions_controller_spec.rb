@@ -16,10 +16,27 @@ describe API::V1::QuestionsController do
 
       serialized_questions = ActiveModel::ArraySerializer.new(ordered_questions,
         root: :questions,
+        include: [:user],
         meta: { current_page: 1, total_pages: 1 }
       )
 
       expect(json).to be_json_eq(serialized_questions)
+    end
+
+    context "when query param status is open" do
+      it "only returns questions that are status open" do
+        open_question = FactoryGirl.create(:question, status: 'open')
+        non_open_question = FactoryGirl.create(:question, status: 'answered')
+        serialized_open_questions = ActiveModel::ArraySerializer.new([open_question],
+          root: :questions,
+          include: [:user],
+          meta: { current_page: 1, total_pages: 1 }
+        )
+
+        get :index, status: 'open'
+
+        expect(json).to be_json_eq(serialized_open_questions)
+      end
     end
   end
 

@@ -3,16 +3,16 @@ module API::V1
     before_action :ensure_valid_api_key!, only: [:create, :update]
 
     def index
-      @questions = Question.includes(:user, :answers)
-        .order(created_at: :desc)
-        .page(params[:page])
+      @questions = Question.includes(:user, :answers).order(created_at: :desc)
+      @questions = @questions.open if params[:status] == "open"
+      @questions = @questions.page(params[:page])
 
       meta = {
         current_page: @questions.current_page,
         total_pages: @questions.total_pages
       }
 
-      render json: @questions, meta: meta
+      render json: @questions, include: [:user], meta: meta
     end
 
     def show
