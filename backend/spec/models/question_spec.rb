@@ -11,6 +11,7 @@ describe Question do
 
   describe "validations" do
     it { should ensure_length_of(:body).is_at_least(30).is_at_most(10000) }
+    it { should validate_presence_of(:status) }
     it { should ensure_length_of(:title).is_at_least(15).is_at_most(150) }
     it { should validate_presence_of(:user) }
 
@@ -36,6 +37,19 @@ describe Question do
 
         expect(question.errors[:accepted_answer]).to include error
       end
+    end
+  end
+
+  describe "#statuses" do
+    subject { Question.statuses }
+
+    it { should have_key :open }
+    it { should have_key :answered }
+  end
+
+  describe "#status" do
+    it "defaults to 'open'" do
+      expect(Question.new).to be_open
     end
   end
 end

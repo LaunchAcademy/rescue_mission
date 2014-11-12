@@ -6,6 +6,7 @@ class QuestionSerializer < ActiveModel::Serializer
     :can_accept_answer,
     :can_assign,
     :can_edit,
+    :status,
     :title
 
   has_one :accepted_answer
