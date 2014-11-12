@@ -15,7 +15,11 @@
       <tr>
         <td>{{user-avatar user=question.user}}</td>
         <td>{{link-to question.title 'questions.show' question}}</td>
-        <td><span class="label">{{question.status}}</label></td>
+        <td>
+          <span {{bind-attr class=":label question.isAnswered:success"}}>
+            {{question.status}}
+          </span>
+        </td>
       </tr>
     {{/each}}
   </tbody>

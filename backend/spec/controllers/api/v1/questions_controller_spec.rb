@@ -99,6 +99,16 @@ describe API::V1::QuestionsController do
           expect(json).to be_json_eq serialized_question
           expect(question.title).to eq "Just kidding, I'm not a troll"
         end
+
+        it "sets question state to answered if the question has an accepted answer" do
+          question = FactoryGirl.create(:question, user: current_user)
+          answer = FactoryGirl.create(:answer, question: question)
+
+          put :update, id: question.id, question: { accepted_answer_id: answer.id }
+          question.reload
+
+          expect(question).to be_answered
+        end
       end
 
       context "with invalid attributes" do
