@@ -2,7 +2,10 @@
   <nav class="top-bar" data-topbar>
     <ul class="title-area">
       <li class="name">
-        <h1>{{link-to 'Rescue Mission' 'index'}}</h1>
+        <h1>
+          {{link-to 'Rescue Mission' 'questions.index'
+            (query-params status='null' page='1')}}
+        </h1>
       </li>
     </ul>
 
