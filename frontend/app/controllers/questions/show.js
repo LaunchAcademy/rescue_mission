@@ -24,9 +24,18 @@ export default Ember.ObjectController.extend(
       this.send('save');
     },
 
-    acceptAnswer: function(answer) {
-      this.set('acceptedAnswer', answer);
-      this.send('save');
+    toggleAcceptedAnswer: function(answer) {
+      var _this = this;
+
+      this.get('acceptedAnswer').then(function(acceptedAnswer) {
+        if (acceptedAnswer === answer) {
+          _this.set('acceptedAnswer', null);
+        } else {
+          _this.set('acceptedAnswer', answer);
+        }
+
+        _this.send('save');
+      });
     }
   }
 });

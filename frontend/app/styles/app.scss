@@ -28,6 +28,10 @@ pre code {
     &:hover, &.is-accepted {
       color: green;
     }
+
+    &.is-accepted:hover {
+      color: red;
+    }
   }
 }
 

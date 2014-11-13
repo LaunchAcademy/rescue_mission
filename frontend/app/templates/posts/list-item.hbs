@@ -5,7 +5,7 @@
 
   <div class="accept-answer">
     {{#if canBeAccepted}}
-      <a {{action 'acceptAnswer' this}} {{bind-attr class="isAccepted"}} href="#">
+      <a {{action 'toggleAcceptedAnswer' this}} {{bind-attr class="isAccepted"}} href="#">
         <i class="fa fa-check-circle-o"></i>
       </a>
     {{else}}
