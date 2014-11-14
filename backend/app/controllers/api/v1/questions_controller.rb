@@ -43,7 +43,11 @@ module API::V1
       authorize @question
 
       if @question.update(question_params)
-        @question.answered! if @question.accepted_answer.present?
+        if @question.accepted_answer.present?
+          @question.answered!
+        else
+          @question.open!
+        end
 
         render json: @question, include: [:answers], status: :ok, location: [:api, :v1, @question]
       else
