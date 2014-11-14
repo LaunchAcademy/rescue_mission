@@ -10,6 +10,7 @@ gem 'kaminari'
 gem 'octokit'
 gem 'pundit'
 gem 'rack-rewrite'
+gem 'skylight'
 gem 'unicorn'
 
 group :production do
