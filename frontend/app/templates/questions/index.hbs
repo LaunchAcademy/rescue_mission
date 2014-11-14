@@ -18,6 +18,7 @@
       <th>User</th>
       <th>Title</th>
       <th>Status</th>
+      <th>Assignee</th>
     </tr>
   </thead>
   <tbody>
@@ -30,6 +31,7 @@
             {{question.status}}
           </span>
         </td>
+        <td>{{user-avatar user=question.assignee}}</td>
       </tr>
     {{/each}}
   </tbody>

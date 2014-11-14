@@ -3,7 +3,7 @@ module API::V1
     before_action :ensure_valid_api_key!, only: [:create, :update]
 
     def index
-      @questions = Question.includes(:user, :answers).order(created_at: :desc)
+      @questions = Question.includes(:user, :answers, :assignee).order(created_at: :desc)
       @questions = @questions.open if params[:status] == "open"
       @questions = @questions.page(params[:page])
 
