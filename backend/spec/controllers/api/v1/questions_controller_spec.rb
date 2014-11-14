@@ -126,6 +126,16 @@ describe API::V1::QuestionsController do
 
           expect(question).to be_answered
         end
+
+        it "sets question state to open if the question does not have an accepted answer" do
+          question = FactoryGirl.create(:question, user: current_user)
+          answer = FactoryGirl.create(:answer, question: question)
+          question.update(accepted_answer: answer)
+
+          put :update, id: question.id, question: { accepted_answer_id: nil }
+
+          expect(question).to be_open
+        end
       end
 
       context "with invalid attributes" do
