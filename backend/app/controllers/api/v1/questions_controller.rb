@@ -29,6 +29,8 @@ module API::V1
       authorize @question
 
       if @question.save
+        QuestionCreated.new(@question).perform
+
         render json: @question,
           status: :created,
           location: [:api, :v1, @question]
