@@ -19,8 +19,8 @@ Create a `backend/.env` file and fill in your GitHub application credentials. Yo
 
 ### Frontend
 
-Before you get started, make sure you have [Node.js](node) and [Bower](bower)
-installed. I'd recommend using [nvm](nvm) to install and manage different
+Before you get started, make sure you have [Node.js][node] and [Bower][bower]
+installed. I'd recommend using [nvm][nvm] to install and manage different
 versions of Node.js.
 
 ```no-highlight
