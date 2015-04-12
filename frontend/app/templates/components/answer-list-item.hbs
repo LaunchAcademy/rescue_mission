@@ -1,0 +1,53 @@
+<div id="answer-{{answer.id}}" class="post-wrapper">
+  <div class="post-avatar">
+    <a href="#">{{user-avatar user=answer.user}}</a>
+  </div>
+
+  <div class="accept-answer">
+    {{#if canBeAccepted}}
+    <a {{action 'toggleAcceptedAnswer' this}}
+      class="{{if answer.isAccepted 'is-accepted'}}" href="#">
+        <i class="fa fa-check-circle-o"></i>
+      </a>
+    {{else}}
+      {{#if answer.isAccepted}}
+        <span class="is-accepted"><i class="fa fa-check-circle-o"></i></span>
+      {{/if}}
+    {{/if}}
+  </div>
+
+  <div class="post post--answer">
+    <div class="post__header">
+      <div class="post__header__text">
+        <span class="post__author">
+          <strong>@{{answer.user.username}}</strong>
+        </span>
+
+        answered
+      </div>
+      <div class="post__actions">
+        {{#if answer.canEdit}}
+          <a class="post__action post__action--edit" href="#" {{action 'edit'}}>
+            <i class="fa fa-pencil"></i> Edit
+          </a>
+        {{/if}}
+      </div>
+    </div>
+
+    <div class="post__content">
+      {{#if isEditing}}
+        {{answer-form answer=answer cancel="cancelEdit"}}
+      {{else}}
+        {{format-markdown answer.body}}
+      {{/if}}
+    </div>
+  </div>
+
+  {{#if isCommentable}}
+    {{render 'comments.list' comments}}
+
+    {{#if isCommenting}}
+      {{render 'comments.new'}}
+    {{/if}}
+  {{/if}}
+</div>

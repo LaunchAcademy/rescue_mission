@@ -16,12 +16,18 @@
 
 <h2>Answers</h2>
 
-{{render 'answers.list' answers}}
+<div class="answers-list">
+  {{#each answers as |answer|}}
+    {{answer-list-item answer=answer canBeAccepted=model.canAcceptAnswer}}
+  {{/each}}
+</div>
 
 <h3>Your Answer</h3>
 
-{{#if session.isAuthenticated}}
-  {{render 'answers.new' answer}}
-{{else}}
-  {{link-to 'Log in to post an answer' 'login'}}
+{{#if false}}
+  {{#if session.isAuthenticated}}
+    {{render 'answers.new' answer}}
+  {{else}}
+    {{link-to 'Log in to post an answer' 'login'}}
+  {{/if}}
 {{/if}}

@@ -22,7 +22,7 @@
     </tr>
   </thead>
   <tbody>
-    {{#each question in model}}
+    {{#each model as |question|}}
       <tr>
         <td>{{user-avatar user=question.user}}</td>
         <td>{{link-to question.title 'questions.show' question}}</td>
