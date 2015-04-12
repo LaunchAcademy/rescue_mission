@@ -1,10 +1,11 @@
 import Ember from 'ember';
+import {module, test} from 'qunit';
 import startApp from '../helpers/start-app';
 
 var App, server;
 
 module('Acceptance: Editing a Question Comment', {
-  setup: function() {
+  beforeEach: function() {
     App = startApp();
 
     var question = {
@@ -34,13 +35,13 @@ module('Acceptance: Editing a Question Comment', {
       });
     });
   },
-  teardown: function() {
+  afterEach: function() {
     Ember.run(App, 'destroy');
     server.shutdown();
   }
 });
 
-test('user successfully edits a question comment', function() {
+test('user successfully edits a question comment', function(assert) {
   var newBody = 'This is the edited content for the comment body';
 
   // Successful response
@@ -69,14 +70,14 @@ test('user successfully edits a question comment', function() {
   click('#comment-1 input[type="submit"]');
 
   andThen(function() {
-    equal(find('#comment-1:contains(' + newBody +')').length, 1,
+    assert.equal(find('#comment-1:contains(' + newBody +')').length, 1,
       'Comment was updated');
-    equal(find('#question-1 .post--comment').length, initialCommentCount,
+    assert.equal(find('#question-1 .post--comment').length, initialCommentCount,
       'No new comments were added to the list');
   });
 });
 
-test('user cannot submit an invalid comment', function() {
+test('user cannot submit an invalid comment', function(assert) {
   authenticateSession();
   visit('/questions/1');
 
@@ -84,7 +85,7 @@ test('user cannot submit an invalid comment', function() {
   fillIn('#comment-1 textarea[name="body"]', '');
 
   andThen(function() {
-    equal(find('#question-1 .comment-form input[type="submit"]').attr('disabled'), 'disabled',
+    assert.equal(find('#question-1 .comment-form input[type="submit"]').attr('disabled'), 'disabled',
       'Comment submit button is disabled');
   });
 });

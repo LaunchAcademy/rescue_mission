@@ -1,10 +1,11 @@
 import Ember from 'ember';
+import {module, test} from 'qunit';
 import startApp from '../helpers/start-app';
 
 var App, server;
 
 module('Acceptance: Editing an Answer', {
-  setup: function() {
+  beforeEach: function() {
     App = startApp();
 
     var users = [
@@ -38,24 +39,24 @@ module('Acceptance: Editing an Answer', {
       });
     });
   },
-  teardown: function() {
+  afterEach: function() {
     Ember.run(App, 'destroy');
     server.shutdown();
   }
 });
 
-test('editing an answer requires authorization', function() {
+test('editing an answer requires authorization', function(assert) {
   visit('/questions/1');
 
   andThen(function() {
-    equal(find('#answer-1 .post__action--edit').length, 1,
+    assert.equal(find('#answer-1 .post__action--edit').length, 1,
       'Edit button shown for editable answer');
-    equal(find('#answer-2 .post__action--edit').length, 0,
+    assert.equal(find('#answer-2 .post__action--edit').length, 0,
       'Edit button not shown for uneditable answer');
   });
 });
 
-test('user edits an answer successfully', function() {
+test('user edits an answer successfully', function(assert) {
   // Successful response
   server.put('/api/v1/answers/:id', function(request) {
     var answer = JSON.parse(request.requestBody).answer;
@@ -73,7 +74,7 @@ test('user edits an answer successfully', function() {
   click('#answer-1 input[type="submit"]');
 
   andThen(function() {
-    equal(find('#answer-1 .post__content:contains("' + newAnswerBody + '")').length, 1,
+    assert.equal(find('#answer-1 .post__content:contains("' + newAnswerBody + '")').length, 1,
       'Answer body was updated');
   });
 });

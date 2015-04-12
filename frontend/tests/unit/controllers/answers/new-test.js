@@ -4,7 +4,7 @@ moduleFor('controller:answers/new', 'AnswersNewController', {
   needs: ['controller:questions/show']
 });
 
-test('it exists', function() {
+test('it exists', function(assert) {
   var controller = this.subject();
-  ok(controller);
+  assert.ok(controller);
 });

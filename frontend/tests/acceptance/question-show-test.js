@@ -1,10 +1,11 @@
 import Ember from 'ember';
+import {module, test} from 'qunit';
 import startApp from '../helpers/start-app';
 
 var App, server;
 
 module('Acceptance: Questions Show', {
-  setup: function() {
+  beforeEach: function() {
     App = startApp();
 
     var users = [
@@ -50,39 +51,39 @@ module('Acceptance: Questions Show', {
       });
     });
   },
-  teardown: function() {
+  afterEach: function() {
     Ember.run(App, 'destroy');
     server.shutdown();
   }
 });
 
-test('question details are displayed', function() {
+test('question details are displayed', function(assert) {
   visit('/questions/1');
 
   andThen(function() {
-    equal(find('.page-title:contains("really bad question")').length, 1,
+    assert.equal(find('.page-title:contains("really bad question")').length, 1,
       'Title found');
-    equal(find('#question-1 .post__author:contains("HeroicEric")').length, 1,
+    assert.equal(find('#question-1 .post__author:contains("HeroicEric")').length, 1,
       'Author found');
-    equal(find('#question-1 .post__content:contains("I write the worst questions")').length, 1,
+    assert.equal(find('#question-1 .post__content:contains("I write the worst questions")').length, 1,
       'Body found');
   });
 });
 
-test('answers are listed on the page', function() {
+test('answers are listed on the page', function(assert) {
   visit('/questions/1');
 
   andThen(function() {
-    equal(find('.answers-list .post--answer').length, 2,
+    assert.equal(find('.answers-list .post--answer').length, 2,
       'The correct number of answers are listed');
-    ok(hasContent('You should just rm -rf *. That should fix it.'),
+    assert.ok(hasContent('You should just rm -rf *. That should fix it.'),
       'First answer found');
-    ok(hasContent('I actually solved this myself by derping the derp'),
+    assert.ok(hasContent('I actually solved this myself by derping the derp'),
       'Second answer found');
   });
 });
 
-test('user answers a question successfully', function() {
+test('user answers a question successfully', function(assert) {
   // Successful response
   server.post('/api/v1/answers', function(request) {
     var answerAttrFromRequest = JSON.parse(request.requestBody).answer;
@@ -104,32 +105,32 @@ test('user answers a question successfully', function() {
   click('.answer-form input[type="submit"]');
 
   andThen(function() {
-    equal(find('.answers-list .post--answer').length, initialAnswerCount + 1,
+    assert.equal(find('.answers-list .post--answer').length, initialAnswerCount + 1,
       'New answer added to the page');
-    ok(hasContent('Thanks for answering!'),
+    assert.ok(hasContent('Thanks for answering!'),
       'Success notification displayed');
-    equal(find('.answer-form textarea[name="body"]').val(), "",
+    assert.equal(find('.answer-form textarea[name="body"]').val(), "",
       'Answer form is reset');
   });
 });
 
-test('user cannot submit an invalid answer', function() {
+test('user cannot submit an invalid answer', function(assert) {
   authenticateSession();
   visit('/questions/1');
 
   andThen(function() {
-    equal(find('.answer-form input[type="submit"]').attr('disabled'), 'disabled',
+    assert.equal(find('.answer-form input[type="submit"]').attr('disabled'), 'disabled',
       'Answer submit button is disabled');
   });
 });
 
-test('posting an answer requires authentication', function() {
+test('posting an answer requires authentication', function(assert) {
   invalidateSession();
   visit('/questions/1');
 
   andThen(function() {
-    equal(find('.answer-form').length, 0, 'Answer form is not displayed');
-    equal(find('a:contains("Log in to post an answer")').length, 1,
+    assert.equal(find('.answer-form').length, 0, 'Answer form is not displayed');
+    assert.equal(find('a:contains("Log in to post an answer")').length, 1,
       'Message to sign in to post an answer displayed');
   });
 });
