@@ -12,11 +12,15 @@
     <link rel="stylesheet" href="assets/vendor.css">
     <link rel="stylesheet" href="assets/rescue-mission.css">
     <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+
+    {{content-for 'head-footer'}}
   </head>
   <body>
     {{content-for 'body'}}
 
     <script src="assets/vendor.js"></script>
     <script src="assets/rescue-mission.js"></script>
+
+    {{content-for 'body-footer'}}
   </body>
 </html>
