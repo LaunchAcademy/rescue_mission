@@ -21,7 +21,8 @@ module.exports = function(environment) {
     torii: {
       providers: {
         'github-oauth2': {
-          scope: 'user:email'
+          scope: 'user:email',
+          apiKey: process.env.GITHUB_CLIENT_ID
         }
       }
     }
@@ -35,7 +36,6 @@ module.exports = function(environment) {
     ENV.APP.LOG_VIEW_LOOKUPS = true;
 
     ENV.host = 'http://localhost:3000';
-    ENV.torii.providers['github-oauth2'].apiKey = '5c4f826abba8e1f95028';
 
     ENV['simple-auth'] = {
       authorizer: 'simple-auth-authorizer:oauth2-bearer',
@@ -65,7 +65,6 @@ module.exports = function(environment) {
 
   if (environment === 'production') {
     ENV.host = 'https://rescue-mission.launchacademy.com';
-    ENV.torii.providers['github-oauth2'].apiKey = '1cf01a0807b2e1f7d2b5';
 
     ENV['simple-auth'] = {
       authorizer: 'simple-auth-authorizer:oauth2-bearer'

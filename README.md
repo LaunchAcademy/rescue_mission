@@ -15,7 +15,8 @@ bundle install
 rake db:setup
 ```
 
-Create a `backend/.env` file and fill in your GitHub application credentials. You can find an example at `backend/.env.example`.
+Create a `backend/.env` file and fill in your GitHub application credentials.
+You can find an example at `backend/.env.example`.
 
 ### Frontend
 
@@ -36,6 +37,9 @@ bower install
 # Symlink Foundation files into app/styles
 ember g foundation-link
 ```
+
+Create a `frontend/.env` file and fill in your GitHub application credentials.
+You can find an example at `frontend/.env.example`.
 
 ### Running the App
 
