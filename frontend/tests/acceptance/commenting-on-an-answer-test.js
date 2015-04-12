@@ -1,10 +1,11 @@
 import Ember from 'ember';
+import {module, test} from 'qunit';
 import startApp from '../helpers/start-app';
 
 var App, server;
 
 module('Acceptance: Commenting on an Answer', {
-  setup: function() {
+  beforeEach: function() {
     App = startApp();
 
     var question = {
@@ -31,13 +32,13 @@ module('Acceptance: Commenting on an Answer', {
       });
     });
   },
-  teardown: function() {
+  afterEach: function() {
     Ember.run(App, 'destroy');
     server.shutdown();
   }
 });
 
-test('user successfully comments on an answer', function() {
+test('user successfully comments on an answer', function(assert) {
   server.post('/api/v1/comments', function(request) {
     var commentResponse = {
       id: 99,
@@ -63,31 +64,31 @@ test('user successfully comments on an answer', function() {
   click('#answer-1 .comment-form input[type="submit"]');
 
   andThen(function() {
-    equal(find('#answer-1 .post--comment').length,
+    assert.equal(find('#answer-1 .post--comment').length,
       initialCommentCount + 1, 'Comment added to feed');
-    ok(hasContent('Comment created succesfully!'),
+    assert.ok(hasContent('Comment created succesfully!'),
       'Success message displayed');
   });
 });
 
-test('posting a comment requires authentication', function() {
+test('posting a comment requires authentication', function(assert) {
   invalidateSession();
   visit('/questions/1');
 
   andThen(function() {
-    equal(find('#answer-1 .add-comment').length, 0,
+    assert.equal(find('#answer-1 .add-comment').length, 0,
       'Question comment form is not displayed');
   });
 });
 
-test('user cannot submit an invalid comment', function() {
+test('user cannot submit an invalid comment', function(assert) {
   authenticateSession();
   visit('/questions/1');
 
   click('#answer-1 .add-comment');
 
   andThen(function() {
-    equal(find('#answer-1 input[type="submit"]').attr('disabled'), 'disabled',
+    assert.equal(find('#answer-1 input[type="submit"]').attr('disabled'), 'disabled',
       'Comment submit button is disabled');
   });
 });

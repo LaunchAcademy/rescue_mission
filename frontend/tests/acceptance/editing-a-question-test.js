@@ -1,4 +1,5 @@
 import Ember from 'ember';
+import {module, test} from 'qunit';
 import startApp from '../helpers/start-app';
 
 var App, server;
@@ -6,17 +7,17 @@ var App, server;
 var editButton = '#question-42 .post__action--edit';
 
 module('Acceptance: Editing a question', {
-  setup: function() {
+  beforeEach: function() {
     App = startApp();
     server = new Pretender();
   },
-  teardown: function() {
+  afterEach: function() {
     Ember.run(App, 'destroy');
     server.shutdown();
   }
 });
 
-test('user successfully edits a question', function() {
+test('user successfully edits a question', function(assert) {
   server.get('/api/v1/questions/:id', function(request) {
     var question = {
       id: 42,
@@ -39,7 +40,7 @@ test('user successfully edits a question', function() {
   visit('/questions/42');
 
   andThen(function() {
-    equal(find('.page-title:contains("Help me, please!")').length, 1,
+    assert.equal(find('.page-title:contains("Help me, please!")').length, 1,
       'Starting question title is displayed correctly');
   });
 
@@ -51,14 +52,14 @@ test('user successfully edits a question', function() {
   click('.question-form input[type="submit"]');
 
   andThen(function() {
-    equal(find('.page-title:contains("Awesome new title for the question")').length, 1,
+    assert.equal(find('.page-title:contains("Awesome new title for the question")').length, 1,
       'Question title is updated');
-    equal(find('#question-42 .post__content:contains("Awesome new body for the question")').length, 1,
+    assert.equal(find('#question-42 .post__content:contains("Awesome new body for the question")').length, 1,
       'Question body is updated');
   });
 });
 
-test('user must be able to edit the question to see the edit buttons', function() {
+test('user must be able to edit the question to see the edit buttons', function(assert) {
   server.get('/api/v1/questions/:id', function(request) {
     var question = { id: 42, can_edit: false };
     return jsonResponse(200, { question: question });
@@ -66,5 +67,5 @@ test('user must be able to edit the question to see the edit buttons', function(
 
   visit('/questions/42');
 
-  equal(find(editButton).length, 0, 'Edit question button not displayed');
+  assert.equal(find(editButton).length, 0, 'Edit question button not displayed');
 });

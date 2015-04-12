@@ -1,20 +1,21 @@
 import Ember from 'ember';
+import {module, test} from 'qunit';
 import startApp from '../helpers/start-app';
 
 var App, server;
 
 module('Acceptance: Asking a question', {
-  setup: function() {
+  beforeEach: function() {
     App = startApp();
     server = new Pretender();
   },
-  teardown: function() {
+  afterEach: function() {
     Ember.run(App, 'destroy');
     server.shutdown();
   }
 });
 
-test('user asks a question', function() {
+test('user asks a question', function(assert) {
   server.post('/api/v1/questions', function(request) {
     var questionResponse = {
       title: 'Deploying Rails app to Heroku',
@@ -34,14 +35,14 @@ test('user asks a question', function() {
   click('input[type="submit"]');
 
   andThen(function() {
-    ok(hasContent('Thanks for asking!'),
+    assert.ok(hasContent('Thanks for asking!'),
       'Success message displayed');
-    equal(currentRouteName(), 'questions.show',
+    assert.equal(currentRouteName(), 'questions.show',
       'Redirected to question show page');
   });
 });
 
-test('form cannot be submitted without valid information', function() {
+test('form cannot be submitted without valid information', function(assert) {
   authenticateSession();
 
   visit('/questions/new');
@@ -50,18 +51,18 @@ test('form cannot be submitted without valid information', function() {
   fillIn('.question-form textarea[name="body"]', '2short');
 
   andThen(function() {
-    equal(find('input[type="submit"]').attr('disabled'), 'disabled',
+    assert.equal(find('input[type="submit"]').attr('disabled'), 'disabled',
       'Submit button is disabled');
   });
 });
 
-test('it requires authentication', function() {
+test('it requires authentication', function(assert) {
   invalidateSession();
   visit('/questions/new');
 
   andThen(function() {
-    ok(hasContent('You need to log in before you can do that'),
+    assert.ok(hasContent('You need to log in before you can do that'),
       'Prompted to log in');
-    notEqual(currentRouteName(), 'questions.new');
+    assert.notEqual(currentRouteName(), 'questions.new');
   });
 });

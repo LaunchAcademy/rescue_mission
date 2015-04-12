@@ -5,8 +5,10 @@ import config from './config/environment';
 
 // Set to false to fix polymorphic relationships
 Ember.MODEL_FACTORY_INJECTIONS = false;
+var App;
 
-var App = Ember.Application.extend({
+
+App = Ember.Application.extend({
   modulePrefix: config.modulePrefix,
   podModulePrefix: config.podModulePrefix,
   Resolver: Resolver

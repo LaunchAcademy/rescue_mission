@@ -5,18 +5,18 @@ moduleForModel('question', 'Question', {
   needs: ['model:answer', 'model:comment', 'model:user']
 });
 
-test('canEdit defaults to false', function() {
+test('canEdit defaults to false', function(assert) {
   var question = this.subject();
 
-  equal(question.get('canEdit'), false);
+  assert.equal(question.get('canEdit'), false);
 });
 
-test('canEdit can be set to true', function() {
+test('canEdit can be set to true', function(assert) {
   var question = this.subject();
 
   Ember.run(function() {
     question.set('canEdit', true);
   });
 
-  equal(question.get('canEdit'), true);
+  assert.equal(question.get('canEdit'), true);
 });
